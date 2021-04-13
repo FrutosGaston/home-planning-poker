@@ -1,0 +1,13 @@
+spring:
+  application:
+    name: ms-movientos
+  datasource:
+    driver-class-name: org.postgresql.Driver
+    username: postgres
+    password: postgres
+    url: jdbc:postgresql://localhost:5432/postgres
+
+rest:
+  client:
+    default:
+      timeout: 10000
