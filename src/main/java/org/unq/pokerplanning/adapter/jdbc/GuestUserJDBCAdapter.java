@@ -34,7 +34,7 @@ public class GuestUserJDBCAdapter implements GuestUserRepository {
             MapSqlParameterSource map = GuestUserVO.of(user, roomId).toMap();
             return genericDAO.insert(insertQuery, map).intValue();
         } catch (DataAccessException ex) {
-            log.error("Ocurrio un error al realizar el insert del movimiento: {}, ex: {}", user, ex);
+            log.error("Ocurrio un error al realizar el insert del usuario: {}, ex: {}", user, ex);
             throw new SqlResourceException(ErrorCode.INSERT_JDBC, ex);
         }
     }
