@@ -1,9 +1,9 @@
 package org.unq.pokerplanning.application.port.out;
 
-import org.unq.pokerplanning.domain.User;
+import org.unq.pokerplanning.domain.GuestUser;
 
 public interface GuestUserRepository {
-    User getUser(Long id);
+    GuestUser getUser(Long id);
 
-    Integer createGuestUser(User user, Long roomId);
+    Integer createGuestUser(GuestUser guestUser);
 }

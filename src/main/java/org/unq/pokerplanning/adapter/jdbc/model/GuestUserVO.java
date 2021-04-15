@@ -4,7 +4,7 @@ import com.fasterxml.jackson.databind.PropertyNamingStrategy;
 import com.fasterxml.jackson.databind.annotation.JsonNaming;
 import lombok.*;
 import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
-import org.unq.pokerplanning.domain.User;
+import org.unq.pokerplanning.domain.GuestUser;
 
 @Data
 @NoArgsConstructor
@@ -15,15 +15,15 @@ public class GuestUserVO {
     private String name;
     private Long roomId;
 
-    public static GuestUserVO of(User user, Long roomId) {
+    public static GuestUserVO of(GuestUser guestUser) {
         return GuestUserVO.builder()
-                .name(user.getName())
-                .roomId(roomId)
+                .name(guestUser.getName())
+                .roomId(guestUser.getRoomId())
                 .build();
     }
 
-    public User toDomain() {
-        return User.builder()
+    public GuestUser toDomain() {
+        return GuestUser.builder()
                 .name(this.name)
                 .build();
     }

@@ -8,7 +8,7 @@ import org.unq.pokerplanning.adapter.jdbc.exception.SqlResourceException;
 import org.unq.pokerplanning.adapter.jdbc.model.GuestUserVO;
 import org.unq.pokerplanning.application.port.out.GuestUserRepository;
 import org.unq.pokerplanning.config.ErrorCode;
-import org.unq.pokerplanning.domain.User;
+import org.unq.pokerplanning.domain.GuestUser;
 
 @Component
 @Slf4j
@@ -24,17 +24,17 @@ public class GuestUserJDBCAdapter implements GuestUserRepository {
     }
 
     @Override
-    public User getUser(Long id) {
+    public GuestUser getUser(Long id) {
         return null;
     }
 
     @Override
-    public Integer createGuestUser(User user, Long roomId) {
+    public Integer createGuestUser(GuestUser guestUser) {
         try {
-            MapSqlParameterSource map = GuestUserVO.of(user, roomId).toMap();
+            MapSqlParameterSource map = GuestUserVO.of(guestUser).toMap();
             return genericDAO.insert(insertQuery, map).intValue();
         } catch (DataAccessException ex) {
-            log.error("Ocurrio un error al realizar el insert del usuario: {}, ex: {}", user, ex);
+            log.error("Ocurrio un error al realizar el insert del usuario: {}, ex: {}", guestUser, ex);
             throw new SqlResourceException(ErrorCode.INSERT_JDBC, ex);
         }
     }

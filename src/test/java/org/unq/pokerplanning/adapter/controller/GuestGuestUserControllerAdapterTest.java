@@ -1,12 +1,10 @@
 package org.unq.pokerplanning.adapter.controller;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import org.unq.pokerplanning.adapter.controller.model.UserRest;
-import org.unq.pokerplanning.adapter.rest.exception.NotFoundRestClientException;
-import org.unq.pokerplanning.application.port.in.AddUserToRoomCommand;
-import org.unq.pokerplanning.config.ErrorCode;
+import org.unq.pokerplanning.adapter.controller.model.GuestUserRest;
+import org.unq.pokerplanning.application.port.in.CreateGuestUserCommand;
 import org.unq.pokerplanning.config.TestConfig;
-import org.unq.pokerplanning.domain.User;
+import org.unq.pokerplanning.domain.GuestUser;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,9 +13,6 @@ import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.context.annotation.Import;
 import org.springframework.test.web.servlet.MockMvc;
 
-import static org.hamcrest.Matchers.containsString;
-import static org.mockito.ArgumentMatchers.anyLong;
-import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
@@ -26,9 +21,9 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @DisplayName("RoomController Adapter Test")
-@WebMvcTest(RoomControllerAdapter.class)
+@WebMvcTest(GuestUserControllerAdapter.class)
 @Import(TestConfig.class)
-class RoomControllerAdapterTest {
+class GuestGuestUserControllerAdapterTest {
 
     @Autowired
     private MockMvc mockMvc;
@@ -37,15 +32,15 @@ class RoomControllerAdapterTest {
     private ObjectMapper objectMapper;
 
     @MockBean
-    private AddUserToRoomCommand addUserToRoomCommand;
+    private CreateGuestUserCommand createGuestUserCommand;
 
     @Test
     @DisplayName("when the addUserToRoom is called, the adapter must return a user")
     void addUserToRoom() throws Exception {
         Long roomId = 1L;
-        String bodyJson = "{\"name\":\"Juan\"}";
-        when(addUserToRoomCommand.execute(getUser(), roomId)).thenReturn(getUser());
-        this.mockMvc.perform(post("/api/v1/rooms/{roomId}/users", roomId)
+        String bodyJson = "{\"name\":\"Juan\", \"roomId\":1}";
+        when(createGuestUserCommand.execute(getUser())).thenReturn(getUser());
+        this.mockMvc.perform(post("/api/v1/guest-users")
                 .content(bodyJson).contentType("application/json"))
                 .andDo(print())
                 .andExpect(status().isOk())
@@ -64,15 +59,17 @@ class RoomControllerAdapterTest {
 //                .andExpect(content().string(containsString(ErrorCode.POKEMON_NOT_FOUND.getReasonPhrase())));
     }
 
-    private User getUser() {
-        return User.builder()
+    private GuestUser getUser() {
+        return GuestUser.builder()
                 .name("Juan")
+                .roomId(1L)
                 .build();
     }
 
-    private UserRest getUserRest() {
-        return UserRest.builder()
+    private GuestUserRest getUserRest() {
+        return GuestUserRest.builder()
                 .name("Juan")
+                .roomId(1L)
                 .build();
     }
 }
