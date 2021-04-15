@@ -8,7 +8,7 @@ import java.math.BigDecimal;
 @Data
 @Builder
 public class GuestUser {
-    private Long id;
+    private Integer id;
     private String name;
-    private Long roomId;
+    private Integer roomId;
 }

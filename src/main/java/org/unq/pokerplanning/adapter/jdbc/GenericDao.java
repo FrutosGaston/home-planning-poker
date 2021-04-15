@@ -27,15 +27,17 @@ public class GenericDao {
     }
 
     public <T> Optional<T> findObject(String sql, SqlParameterSource params, Class<T> clazz) {
-        return doFindObjects(sql, params, clazz).stream().findFirst();
+        return findObjects(sql, params, clazz).stream().findFirst();
     }
 
-    public Number insert(String sql, MapSqlParameterSource params) {
+    public Number insert(String sql, MapSqlParameterSource params, String[] keys) {
         log.debug(MENSAJE, sql, params);
-        return template.update(sql, params);
+        KeyHolder keyHolder = new GeneratedKeyHolder();
+        template.update(sql, params, keyHolder, keys);
+        return keyHolder.getKey();
     }
 
-    private <T> List<T> doFindObjects(String sql, SqlParameterSource params, Class<T> clazz) {
+    public <T> List<T> findObjects(String sql, SqlParameterSource params, Class<T> clazz) {
         log.debug(MENSAJE, sql, params);
         return template.query(sql, params, new BeanPropertyRowMapper<>(clazz));
     }

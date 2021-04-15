@@ -37,9 +37,9 @@ class GuestGuestUserControllerAdapterTest {
     @Test
     @DisplayName("when the addUserToRoom is called, the adapter must return a user")
     void addUserToRoom() throws Exception {
-        Long roomId = 1L;
+        Integer roomId = 1;
         String bodyJson = "{\"name\":\"Juan\", \"roomId\":1}";
-        when(createGuestUserCommand.execute(getUser())).thenReturn(getUser());
+        when(createGuestUserCommand.execute(getUser())).thenReturn(1);
         this.mockMvc.perform(post("/api/v1/guest-users")
                 .content(bodyJson).contentType("application/json"))
                 .andDo(print())
@@ -62,14 +62,14 @@ class GuestGuestUserControllerAdapterTest {
     private GuestUser getUser() {
         return GuestUser.builder()
                 .name("Juan")
-                .roomId(1L)
+                .roomId(1)
                 .build();
     }
 
     private GuestUserRest getUserRest() {
         return GuestUserRest.builder()
                 .name("Juan")
-                .roomId(1L)
+                .roomId(1)
                 .build();
     }
 }

@@ -41,17 +41,17 @@ class AddGuestUserToRoomUseCaseTest {
     void testPokemonAbility() throws ExecutionException, InterruptedException {
 
         //given
-        GuestUser guestUser = GuestUser.builder().name("Juan").roomId(1L).build();
+        GuestUser guestUser = GuestUser.builder().name("Juan").roomId(1).build();
 
         when(guestUserRepository.createGuestUser(guestUser)).thenReturn(1);
 
-        CreateGuestUserUseCase addUserToRoomUseCase = new CreateGuestUserUseCase(guestUserRepository);
+        CreateGuestUserUseCase createGuestUserUseCase = new CreateGuestUserUseCase(guestUserRepository);
 
         //when
-        GuestUser resultGuestUser = addUserToRoomUseCase.execute(guestUser);
+        Integer resultGuestUser = createGuestUserUseCase.execute(guestUser);
 
         //then
-        assertEquals(GuestUser.builder().name("Juan").roomId(1L).build(), resultGuestUser);
+        assertEquals(1, resultGuestUser);
     }
 
 }

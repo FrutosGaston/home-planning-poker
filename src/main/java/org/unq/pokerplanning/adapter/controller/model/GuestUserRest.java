@@ -7,9 +7,9 @@ import org.unq.pokerplanning.domain.GuestUser;
 @Value
 @Builder
 public class GuestUserRest {
-    Long id;
+    Integer id;
     String name;
-    Long roomId;
+    Integer roomId;
 
     public static GuestUserRest from(GuestUser guestUser) {
         return GuestUserRest.builder()

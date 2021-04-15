@@ -12,8 +12,9 @@ import org.unq.pokerplanning.domain.GuestUser;
 @Builder
 @JsonNaming(PropertyNamingStrategy.SnakeCaseStrategy.class)
 public class GuestUserVO {
+    private Integer id;
     private String name;
-    private Long roomId;
+    private Integer roomId;
 
     public static GuestUserVO of(GuestUser guestUser) {
         return GuestUserVO.builder()
@@ -24,7 +25,9 @@ public class GuestUserVO {
 
     public GuestUser toDomain() {
         return GuestUser.builder()
+                .id(this.id)
                 .name(this.name)
+                .roomId(this.roomId)
                 .build();
     }
 
