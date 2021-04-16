@@ -3,14 +3,14 @@ package org.unq.pokerplanning.domain;
 import lombok.Builder;
 import lombok.Data;
 
-import java.math.BigDecimal;
 import java.time.LocalDateTime;
 
 @Data
 @Builder
-public class GuestUser {
+public class Estimation {
     private Integer id;
     private String name;
-    private Integer roomId;
+    private Integer roundId;
+    private Integer guestUserId;
     private LocalDateTime createdAt;
 }

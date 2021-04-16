@@ -13,7 +13,7 @@ import static com.tngtech.archunit.library.GeneralCodingRules.NO_CLASSES_SHOULD_
 import static com.tngtech.archunit.library.GeneralCodingRules.NO_CLASSES_SHOULD_USE_JODATIME;
 
 
-@AnalyzeClasses(packages = "com.redbee.seed", importOptions = ImportOption.DoNotIncludeTests.class)
+@AnalyzeClasses(packages = "org.unq.pokerplanning", importOptions = ImportOption.DoNotIncludeTests.class)
 public class CodingRulesTest {
 
     @ArchTest

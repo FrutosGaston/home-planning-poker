@@ -3,14 +3,15 @@ package org.unq.pokerplanning.domain;
 import lombok.Builder;
 import lombok.Data;
 
-import java.math.BigDecimal;
 import java.time.LocalDateTime;
+import java.util.List;
 
 @Data
 @Builder
-public class GuestUser {
+public class Round {
     private Integer id;
-    private String name;
     private Integer roomId;
+    private String title;
+    private List<Estimation> estimations;
     private LocalDateTime createdAt;
 }
