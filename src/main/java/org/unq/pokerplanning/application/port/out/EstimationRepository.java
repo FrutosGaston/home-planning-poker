@@ -6,4 +6,6 @@ import java.util.List;
 
 public interface EstimationRepository {
     List<Estimation> findByRound(Integer roundId);
+
+    Integer create(Estimation estimation);
 }

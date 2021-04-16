@@ -28,4 +28,11 @@ public class EstimationRest {
                 .build();
     }
 
+    public Estimation toDomain() {
+        return Estimation.builder()
+                .name(this.name)
+                .guestUserId(this.guestUserId)
+                .roundId(this.roundId)
+                .build();
+    }
 }
