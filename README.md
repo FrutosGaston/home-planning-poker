@@ -1,5 +1,8 @@
 # Home Planning Poker
 
+Repositorio frontend:
+https://github.com/FrutosGaston/home-poker-planning-ui
+
 Esta basado en el principio de Clean Architecture.
 
 ![alt text](docs/clean.png)
