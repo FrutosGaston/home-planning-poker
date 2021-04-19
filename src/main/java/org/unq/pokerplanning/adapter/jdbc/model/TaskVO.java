@@ -18,6 +18,7 @@ import java.time.LocalDateTime;
 public class TaskVO {
     private Integer id;
     private String title;
+    private String finalEstimation;
     private Integer roomId;
     private LocalDateTime createdAt;
 
@@ -25,6 +26,7 @@ public class TaskVO {
         return Task.builder()
                 .id(this.id)
                 .title(this.title)
+                .finalEstimation(this.finalEstimation)
                 .roomId(this.roomId)
                 .createdAt(this.createdAt)
                 .build();

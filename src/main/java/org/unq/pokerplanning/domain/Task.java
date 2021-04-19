@@ -11,9 +11,10 @@ import java.util.List;
 @Value
 @Builder
 public class Task {
-    private Integer id;
-    private Integer roomId;
-    private String title;
-    @With private List<Estimation> estimations;
-    private LocalDateTime createdAt;
+    Integer id;
+    Integer roomId;
+    String title;
+    String finalEstimation;
+    @With List<Estimation> estimations;
+    LocalDateTime createdAt;
 }

@@ -15,6 +15,7 @@ public class TaskRest {
     Integer id;
     Integer roomId;
     String title;
+    String finalEstimation;
     List<EstimationRest> estimations;
     @JsonFormat(pattern="yyyy-MM-dd HH:mm:ss")
     LocalDateTime createdAt;
@@ -24,6 +25,7 @@ public class TaskRest {
                 .id(task.getId())
                 .roomId(task.getRoomId())
                 .title(task.getTitle())
+                .finalEstimation(task.getFinalEstimation())
                 .createdAt(task.getCreatedAt())
                 .estimations(task.getEstimations().stream()
                         .map(EstimationRest::from)
