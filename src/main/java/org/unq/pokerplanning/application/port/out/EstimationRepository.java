@@ -5,7 +5,7 @@ import org.unq.pokerplanning.domain.Estimation;
 import java.util.List;
 
 public interface EstimationRepository {
-    List<Estimation> findByRound(Integer roundId);
+    List<Estimation> findByTask(Integer taskId);
 
     Integer create(Estimation estimation);
 }

@@ -1,9 +1,11 @@
+
 -- ROOM
 create table room
 (
     name varchar not null,
     id serial not null,
-    description varchar default ''
+    description varchar default '',
+    created_at timestamp default NOW()
 );
 
 create unique index room_id_uindex
@@ -22,7 +24,8 @@ create table guest_user
     room_id int not null
         constraint guest_user_room_id_fk
             references room (id)
-            on delete cascade
+            on delete cascade,
+    created_at timestamp default NOW()
 );
 
 create unique index guest_user_id_uindex
@@ -33,35 +36,38 @@ alter table guest_user
         primary key (id);
 
 
--- Round
-create table round
+-- TASK
+create table task
 (
     room_id int not null
-        constraint round_room_id_fk
+        constraint task_room_id_fk
             references room
             on delete cascade,
     id serial not null,
-    title varchar
+    final_estimation varchar,
+    title varchar,
+    created_at timestamp default NOW()
 );
 
-create unique index round_id_uindex
-	on round (id);
+create unique index task_id_uindex
+	on task (id);
 
-alter table round
-    add constraint round_pk
+alter table task
+    add constraint task_pk
         primary key (id);
 
--- Estimation
+-- ESTIMATION
 create table estimation
 (
-    id int not null,
+    id serial not null,
     name varchar not null,
     guest_user_id int not null
         constraint estimation_guest_user_id_fk
             references guest_user,
-    round_id int not null
-        constraint estimation_round_id_fk
-            references round
+    task_id int not null
+        constraint estimation_task_id_fk
+            references task,
+    created_at timestamp default NOW()
 );
 
 create unique index estimation_id_uindex

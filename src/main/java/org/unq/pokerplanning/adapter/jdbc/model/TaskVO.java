@@ -6,27 +6,23 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
-import org.unq.pokerplanning.domain.GuestUser;
-import org.unq.pokerplanning.domain.Round;
+import org.unq.pokerplanning.domain.Task;
 
 import java.time.LocalDateTime;
-import java.util.List;
-import java.util.stream.Collectors;
 
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
 @JsonNaming(PropertyNamingStrategy.SnakeCaseStrategy.class)
-public class RoundVO {
+public class TaskVO {
     private Integer id;
     private String title;
     private Integer roomId;
     private LocalDateTime createdAt;
 
-    public Round toDomain() {
-        return Round.builder()
+    public Task toDomain() {
+        return Task.builder()
                 .id(this.id)
                 .title(this.title)
                 .roomId(this.roomId)

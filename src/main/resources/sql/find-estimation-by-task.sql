@@ -1,7 +1,7 @@
 SELECT id,
        name,
-       round_id,
+       task_id,
        guest_user_id,
        created_at
 FROM estimation
-WHERE round_id = :round_id
+WHERE task_id = :task_id

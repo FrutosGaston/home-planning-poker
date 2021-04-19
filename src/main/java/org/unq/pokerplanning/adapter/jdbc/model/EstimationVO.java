@@ -8,7 +8,6 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
 import org.unq.pokerplanning.domain.Estimation;
-import org.unq.pokerplanning.domain.Round;
 
 import java.time.LocalDateTime;
 
@@ -20,14 +19,14 @@ import java.time.LocalDateTime;
 public class EstimationVO {
     private Integer id;
     private String name;
-    private Integer roundId;
+    private Integer taskId;
     private Integer guestUserId;
     private LocalDateTime createdAt;
 
     public static EstimationVO of(Estimation estimation) {
         return EstimationVO.builder()
                 .name(estimation.getName())
-                .roundId(estimation.getRoundId())
+                .taskId(estimation.getTaskId())
                 .guestUserId(estimation.getGuestUserId())
                 .build();
     }
@@ -36,7 +35,7 @@ public class EstimationVO {
         return Estimation.builder()
                 .id(this.id)
                 .name(this.name)
-                .roundId(this.roundId)
+                .taskId(this.taskId)
                 .guestUserId(this.guestUserId)
                 .createdAt(this.createdAt)
                 .build();
@@ -46,6 +45,6 @@ public class EstimationVO {
         return new MapSqlParameterSource()
                 .addValue("name", this.name)
                 .addValue("guest_user_id", this.guestUserId)
-                .addValue("round_id", this.roundId);
+                .addValue("task_id", this.taskId);
     }
 }
