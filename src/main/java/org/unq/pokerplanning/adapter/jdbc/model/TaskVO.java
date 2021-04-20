@@ -6,6 +6,7 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
 import org.unq.pokerplanning.domain.Task;
 
 import java.time.LocalDateTime;
@@ -22,6 +23,16 @@ public class TaskVO {
     private Integer roomId;
     private LocalDateTime createdAt;
 
+    public static TaskVO of(Task task) {
+        return TaskVO.builder()
+                .id(task.getId())
+                .finalEstimation(task.getFinalEstimation())
+                .title(task.getTitle())
+                .roomId(task.getRoomId())
+                .createdAt(task.getCreatedAt())
+                .build();
+    }
+
     public Task toDomain() {
         return Task.builder()
                 .id(this.id)
@@ -32,4 +43,10 @@ public class TaskVO {
                 .build();
     }
 
+    public MapSqlParameterSource toMap() {
+        return new MapSqlParameterSource()
+                .addValue("id", this.id)
+                .addValue("title", this.title)
+                .addValue("final_estimation", this.finalEstimation);
+    }
 }
