@@ -1,24 +1,13 @@
 # Home Planning Poker
+![logo](docs/logo-hpp.svg)
 
-Repositorio frontend:
-https://github.com/FrutosGaston/home-poker-planning-ui
+Home Planning Poker es una plataforma en la que podremos simular virtualmente la conocida practica llamada de manera similar: [Planning Poker](https://es.wikipedia.org/wiki/Planning_poker).
+Aquí seremos capaces de crear una sala en línea, asignarle las tareas que queremos estimar en la sesión, elegir nuestro mazo favorito y finalmente invitar a nuestro equipo para estimar en conjunto.
 
-Esta basado en el principio de Clean Architecture.
+## [Repositorio frontend](https://github.com/FrutosGaston/home-poker-planning-ui)
 
-![alt text](docs/clean.png)
-
-## Estructura de paquetes
-
-Se definió la siguiente taxonomía de paquetes:
-
-   * **application:** Encapsula toda la lógica de negocio y el modelo del dominio.
-        * **domain:** Contiene entidades del dominio. Representa el nucleo de toda la aplicación.
-        * **usescases:** Abstracción de los casos de uso del sistema. Contiene además la definición de los puertos y excepciones.
-   * **adapters:** Representa la capa de adaptadores (como su nombre indica) que se conectarán en los puertos expuestos por el sistema
-   * **config:** Capa transversal a toda la aplicación que contendrá las distintas configuraciones y aspectos del bff.
-        
-![alt text](docs/packages.png)
-
+## Miembros
+* [Frutos Gaston](https://www.linkedin.com/in/gaston-frutos/)
 
 ## Java Version
 La version que java que se va a utilizar es la 11.0.10 basada en el OpenJDK.
