@@ -28,8 +28,8 @@ public final class TaskControllerAdapter {
         this.updateTaskCommand = updateTaskCommand;
     }
 
-    @GetMapping()
-    public List<TaskRest> getTask(@RequestParam Integer roomId) {
+    @GetMapping
+    public List<TaskRest> findTasks(@RequestParam Integer roomId) {
         List<Task> tasks = findTaskQuery.execute(roomId);
         return tasks.stream().map(TaskRest::from).collect(Collectors.toList());
     }
@@ -40,7 +40,7 @@ public final class TaskControllerAdapter {
     }
 
     @PostMapping("/estimations")
-    public Integer createTask(@RequestBody EstimationRest estimation) {
+    public Integer createEstimation(@RequestBody EstimationRest estimation) {
         return createEstimationCommand.execute(estimation.toDomain());
     }
 }

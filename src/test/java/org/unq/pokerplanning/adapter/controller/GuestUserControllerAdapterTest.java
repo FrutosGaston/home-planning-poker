@@ -1,8 +1,11 @@
 package org.unq.pokerplanning.adapter.controller;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
+import org.springframework.boot.test.context.SpringBootTest;
 import org.unq.pokerplanning.adapter.controller.model.GuestUserRest;
 import org.unq.pokerplanning.application.port.in.CreateGuestUserCommand;
+import org.unq.pokerplanning.application.port.in.FindGuestUserQuery;
 import org.unq.pokerplanning.config.TestConfig;
 import org.unq.pokerplanning.domain.GuestUser;
 import org.junit.jupiter.api.DisplayName;
@@ -13,6 +16,9 @@ import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.context.annotation.Import;
 import org.springframework.test.web.servlet.MockMvc;
 
+import java.util.Arrays;
+import java.util.Collections;
+
 import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
@@ -20,10 +26,11 @@ import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
-@DisplayName("RoomController Adapter Test")
-@WebMvcTest(GuestUserControllerAdapter.class)
+@DisplayName("GuestUserController Adapter Test")
+@SpringBootTest
+@AutoConfigureMockMvc
 @Import(TestConfig.class)
-class GuestGuestUserControllerAdapterTest {
+class GuestUserControllerAdapterTest {
 
     @Autowired
     private MockMvc mockMvc;
@@ -34,42 +41,46 @@ class GuestGuestUserControllerAdapterTest {
     @MockBean
     private CreateGuestUserCommand createGuestUserCommand;
 
+    @MockBean
+    private FindGuestUserQuery findGuestUserQuery;
+
+    Integer roomId = 1;
+    String name = "Juan";
+
     @Test
-    @DisplayName("when the addUserToRoom is called, the adapter must return a user")
-    void addUserToRoom() throws Exception {
-        Integer roomId = 1;
-        String bodyJson = "{\"name\":\"Juan\", \"roomId\":1}";
-        when(createGuestUserCommand.execute(getUser())).thenReturn(1);
+    @DisplayName("when createGuestUser is called, the adapter must return its id")
+    void createGuestUser() throws Exception {
+        Integer expectedId = 1;
+        String bodyJson = "{\"name\":\"" + name + "\", \"roomId\":" + roomId + "}";
+        when(createGuestUserCommand.execute(getUser())).thenReturn(expectedId);
         this.mockMvc.perform(post("/api/v1/guest-users")
                 .content(bodyJson).contentType("application/json"))
                 .andDo(print())
                 .andExpect(status().isOk())
-                .andExpect(content().json(objectMapper.writeValueAsString(getUserRest())));
+                .andExpect(content().string(expectedId.toString()));
     }
 
     @Test
-    @DisplayName("when the getPokemon is called, the adapter must return a NotFound exception")
-    void getPokemonNotFound() throws Exception {
-//
-//        when(getPokemonAbilityQuery.getPokemon(anyString()))
-//                .thenThrow(new NotFoundRestClientException(ErrorCode.POKEMON_NOT_FOUND));
-//        this.mockMvc.perform(get("/api/v1/pokemon/{name}", PIKACHU))
-//                .andDo(print())
-//                .andExpect(status().isNotFound())
-//                .andExpect(content().string(containsString(ErrorCode.POKEMON_NOT_FOUND.getReasonPhrase())));
+    @DisplayName("when findGuestUser is called, the adapter must return a list of users")
+    void findGuestUser() throws Exception {
+        when(findGuestUserQuery.execute(roomId)).thenReturn(Collections.singletonList(getUser()));
+        this.mockMvc.perform(get("/api/v1/guest-users?roomId=" + roomId))
+                .andDo(print())
+                .andExpect(status().isOk())
+                .andExpect(content().json(objectMapper.writeValueAsString(Collections.singletonList(getUserRest()))));
     }
 
     private GuestUser getUser() {
         return GuestUser.builder()
-                .name("Juan")
-                .roomId(1)
+                .name(name)
+                .roomId(roomId)
                 .build();
     }
 
     private GuestUserRest getUserRest() {
         return GuestUserRest.builder()
-                .name("Juan")
-                .roomId(1)
+                .name(name)
+                .roomId(roomId)
                 .build();
     }
 }
