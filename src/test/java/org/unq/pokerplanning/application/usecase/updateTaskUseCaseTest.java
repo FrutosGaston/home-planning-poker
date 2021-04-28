@@ -1,30 +1,32 @@
 package org.unq.pokerplanning.application.usecase;
 
-import org.unq.pokerplanning.application.port.out.GuestUserRepository;
-import org.unq.pokerplanning.domain.GuestUser;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor;
+import org.unq.pokerplanning.application.port.out.EstimationRepository;
+import org.unq.pokerplanning.application.port.out.TaskRepository;
+import org.unq.pokerplanning.domain.Estimation;
+import org.unq.pokerplanning.domain.Task;
 
-import java.util.concurrent.ExecutionException;
+import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
-@DisplayName("AddUserToRoomUseCase Test")
+@DisplayName("updateTaskUseCase Test")
 @ExtendWith(MockitoExtension.class)
-class AddGuestUserToRoomUseCaseTest {
+class updateTaskUseCaseTest {
 
     private static final int CORE_POOL_SIZE = 20;
     private static final int MAX_POOL_SIZE = 1000;
     private static final String ASYNC_PREFIX = "async-";
     private static final boolean WAIT_FOR_TASK_TO_COMPLETE_ON_SHUTDOWN = true;
 
-    private final GuestUserRepository guestUserRepository = mock(GuestUserRepository.class);
+    private final TaskRepository taskRepository = mock(TaskRepository.class);
 
     @BeforeAll
     static void init() {
@@ -37,21 +39,22 @@ class AddGuestUserToRoomUseCaseTest {
     }
 
     @Test
-    @DisplayName("When GetPokemonAbilityUseCase is executed Should Return a Pokemon")
-    void testPokemonAbility() throws ExecutionException, InterruptedException {
+    @DisplayName("When updateTask is executed Should Return an integer indicating that it worked well")
+    void updateTaskOk() {
 
         //given
-        GuestUser guestUser = GuestUser.builder().name("Juan").roomId(1).build();
+        Integer updateResult = 1;
+        Task task = Task.builder().build();
 
-        when(guestUserRepository.createGuestUser(guestUser)).thenReturn(1);
+        when(taskRepository.update(task)).thenReturn(updateResult);
 
-        CreateGuestUserUseCase createGuestUserUseCase = new CreateGuestUserUseCase(guestUserRepository);
+        UpdateTaskUseCase updateTaskUseCase = new UpdateTaskUseCase(taskRepository);
 
         //when
-        Integer resultGuestUser = createGuestUserUseCase.execute(guestUser);
+        Integer resultTask = updateTaskUseCase.execute(task);
 
         //then
-        assertEquals(1, resultGuestUser);
+        assertEquals(updateResult, resultTask);
     }
 
 }
