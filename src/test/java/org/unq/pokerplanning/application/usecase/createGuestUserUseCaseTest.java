@@ -1,5 +1,6 @@
 package org.unq.pokerplanning.application.usecase;
 
+import org.unq.pokerplanning.application.port.out.GuestUserMessenger;
 import org.unq.pokerplanning.application.port.out.GuestUserRepository;
 import org.unq.pokerplanning.domain.GuestUser;
 import org.junit.jupiter.api.BeforeAll;
@@ -25,6 +26,7 @@ class createGuestUserUseCaseTest {
     private static final boolean WAIT_FOR_TASK_TO_COMPLETE_ON_SHUTDOWN = true;
 
     private final GuestUserRepository guestUserRepository = mock(GuestUserRepository.class);
+    private final GuestUserMessenger guestUserMessenger = mock(GuestUserMessenger.class);
 
     @BeforeAll
     static void init() {
@@ -45,7 +47,7 @@ class createGuestUserUseCaseTest {
 
         when(guestUserRepository.createGuestUser(guestUser)).thenReturn(1);
 
-        CreateGuestUserUseCase createGuestUserUseCase = new CreateGuestUserUseCase(guestUserRepository);
+        CreateGuestUserUseCase createGuestUserUseCase = new CreateGuestUserUseCase(guestUserRepository, guestUserMessenger);
 
         //when
         Integer resultGuestUser = createGuestUserUseCase.execute(guestUser);

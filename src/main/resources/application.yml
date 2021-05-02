@@ -1,6 +1,6 @@
 spring:
   application:
-    name: ms-movientos
+    name: homa-planning-poker
   datasource:
     driver-class-name: org.postgresql.Driver
     username: postgres

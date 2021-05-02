@@ -31,10 +31,13 @@ dependencies {
     implementation 'org.springframework.boot:spring-boot-starter'
     implementation 'org.springframework.boot:spring-boot-starter-web'
     implementation 'org.springframework.boot:spring-boot-starter-actuator'
-    implementation 'org.springframework.cloud:spring-cloud-starter-config'
+    // implementation 'org.springframework.cloud:spring-cloud-starter-config'
     implementation 'org.springframework.boot:spring-boot-starter-data-jdbc'
     implementation 'org.springframework.boot:spring-boot-starter-jdbc'
+    implementation 'org.springframework:spring-websocket'
+    implementation 'org.springframework:spring-messaging'
     implementation 'org.postgresql:postgresql'
+
     //implementation 'org.springframework.boot:spring-boot-starter-data-cassandra'
     //implementation 'org.springframework.boot:spring-boot-starter-data-redis'
     //implementation 'org.springframework.kafka:spring-kafka'
@@ -64,7 +67,7 @@ dependencies {
 
 dependencyManagement {
     imports {
-        mavenBom "org.springframework.cloud:spring-cloud-dependencies:${springCloudVersion}"
+        // mavenBom "org.springframework.cloud:spring-cloud-dependencies:${springCloudVersion}"
     }
 }
 
