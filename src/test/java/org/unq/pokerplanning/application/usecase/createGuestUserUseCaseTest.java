@@ -10,11 +10,11 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor;
 
+import java.util.List;
 import java.util.concurrent.ExecutionException;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.when;
+import static org.mockito.Mockito.*;
 
 @DisplayName("AddUserToRoomUseCase Test")
 @ExtendWith(MockitoExtension.class)
@@ -54,6 +54,23 @@ class createGuestUserUseCaseTest {
 
         //then
         assertEquals(1, resultGuestUser);
+    }
+
+    @Test
+    @DisplayName("guest users messenger should be called")
+    void guestUserMessengerShouldBeCalled() {
+        //given
+        Integer newId = 1;
+        GuestUser guestUser = GuestUser.builder().name("Juan").roomId(1).build();
+        when(guestUserRepository.createGuestUser(guestUser)).thenReturn(newId);
+        CreateGuestUserUseCase createGuestUserUseCase = new CreateGuestUserUseCase(guestUserRepository, guestUserMessenger);
+
+        //when
+        createGuestUserUseCase.execute(guestUser);
+
+        //then
+        GuestUser createdUser = guestUser.withId(newId);
+        verify(guestUserMessenger).created(createdUser);
     }
 
 }

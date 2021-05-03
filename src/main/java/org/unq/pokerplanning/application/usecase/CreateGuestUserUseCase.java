@@ -24,7 +24,7 @@ public class CreateGuestUserUseCase implements CreateGuestUserCommand {
     public Integer execute(GuestUser guestUser) {
         val guestUserId = guestUserRepository.createGuestUser(guestUser);
         val guestUserWithId = guestUser.withId(guestUserId);
-        guestUserMessenger.created(guestUser.getRoomId(), guestUserWithId);
+        guestUserMessenger.created(guestUserWithId);
         return guestUserId;
     }
 }

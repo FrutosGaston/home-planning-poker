@@ -39,7 +39,7 @@ class findGuestUserUseCaseTest {
     }
 
     @Test
-    @DisplayName("When findGuestUser is executed Should Return a list of guest users")
+    @DisplayName("should return a list of guest users")
     void findGuestUserOk() {
 
         //given

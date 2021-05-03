@@ -2,7 +2,6 @@ package org.unq.pokerplanning.adapter.websocket.model;
 
 import lombok.Builder;
 import lombok.Value;
-import org.unq.pokerplanning.adapter.controller.model.GuestUserRest;
 import org.unq.pokerplanning.domain.GuestUser;
 
 import java.time.LocalDateTime;
