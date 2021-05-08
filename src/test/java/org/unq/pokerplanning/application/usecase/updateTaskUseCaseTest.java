@@ -7,11 +7,9 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor;
 import org.unq.pokerplanning.application.port.out.EstimationRepository;
+import org.unq.pokerplanning.application.port.out.TaskMessenger;
 import org.unq.pokerplanning.application.port.out.TaskRepository;
-import org.unq.pokerplanning.domain.Estimation;
 import org.unq.pokerplanning.domain.Task;
-
-import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.Mockito.mock;
@@ -27,6 +25,8 @@ class updateTaskUseCaseTest {
     private static final boolean WAIT_FOR_TASK_TO_COMPLETE_ON_SHUTDOWN = true;
 
     private final TaskRepository taskRepository = mock(TaskRepository.class);
+    private final EstimationRepository estimationRepository = mock(EstimationRepository.class);
+    private final TaskMessenger taskMessenger = mock(TaskMessenger.class);
 
     @BeforeAll
     static void init() {
@@ -48,7 +48,7 @@ class updateTaskUseCaseTest {
 
         when(taskRepository.update(task)).thenReturn(updateResult);
 
-        UpdateTaskUseCase updateTaskUseCase = new UpdateTaskUseCase(taskRepository);
+        UpdateTaskUseCase updateTaskUseCase = new UpdateTaskUseCase(taskRepository, taskMessenger, estimationRepository);
 
         //when
         Integer resultTask = updateTaskUseCase.execute(task);

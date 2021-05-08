@@ -14,7 +14,7 @@ public class GuestUserWS {
     Integer roomId;
     LocalDateTime createdAt;
 
-    public static GuestUserWS from(GuestUser guestUser) {
+    public static GuestUserWS of(GuestUser guestUser) {
         return GuestUserWS.builder()
                 .name(guestUser.getName())
                 .roomId(guestUser.getRoomId())

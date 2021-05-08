@@ -6,10 +6,10 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor;
+import org.unq.pokerplanning.application.port.out.EstimationMessenger;
 import org.unq.pokerplanning.application.port.out.EstimationRepository;
-import org.unq.pokerplanning.application.port.out.GuestUserRepository;
+import org.unq.pokerplanning.application.port.out.TaskRepository;
 import org.unq.pokerplanning.domain.Estimation;
-import org.unq.pokerplanning.domain.GuestUser;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.Mockito.mock;
@@ -25,6 +25,8 @@ class createEstimationUseCaseTest {
     private static final boolean WAIT_FOR_TASK_TO_COMPLETE_ON_SHUTDOWN = true;
 
     private final EstimationRepository estimationRepository = mock(EstimationRepository.class);
+    private final EstimationMessenger estimationMessenger = mock(EstimationMessenger.class);
+    private final TaskRepository taskRepository = mock(TaskRepository.class);
 
     @BeforeAll
     static void init() {
@@ -45,7 +47,7 @@ class createEstimationUseCaseTest {
 
         when(estimationRepository.create(estimation)).thenReturn(1);
 
-        CreateEstimationUseCase createEstimationUseCase = new CreateEstimationUseCase(estimationRepository);
+        CreateEstimationUseCase createEstimationUseCase = new CreateEstimationUseCase(estimationRepository, estimationMessenger, taskRepository);
 
         //when
         Integer resultEstimationId = createEstimationUseCase.execute(estimation);

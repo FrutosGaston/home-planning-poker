@@ -23,7 +23,7 @@ public class GuestUserWSAdapter implements GuestUserMessenger {
         log.info("sending guest user created event to room: {} and guest: {}", roomId, guestUser);
         template.convertAndSend(
                 String.format("/room/%s/guest-users/created", roomId),
-                GuestUserWS.from(guestUser));
+                GuestUserWS.of(guestUser));
     }
 
 }

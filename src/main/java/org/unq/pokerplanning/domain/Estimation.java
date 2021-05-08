@@ -10,9 +10,10 @@ import java.time.LocalDateTime;
 @Value
 @Builder
 public class Estimation {
-    private Integer id;
-    private String name;
-    private Integer taskId;
-    private Integer guestUserId;
-    private LocalDateTime createdAt;
+    @With
+    Integer id;
+    String name;
+    Integer taskId;
+    Integer guestUserId;
+    LocalDateTime createdAt;
 }

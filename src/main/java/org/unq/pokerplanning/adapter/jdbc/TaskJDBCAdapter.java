@@ -12,6 +12,7 @@ import org.unq.pokerplanning.config.ErrorCode;
 import org.unq.pokerplanning.domain.Task;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Component
@@ -20,14 +21,17 @@ public class TaskJDBCAdapter implements TaskRepository {
 
     private static final String FIND_TASK_BY_ROOM_SQL_PATH = "sql/find-task-by-room.sql";
     private static final String UPDATE_TASK_SQL_PATH = "sql/update-task.sql";
+    private static final String GET_TASK_SQL_PATH = "sql/get-task.sql";
     private final GenericDao genericDAO;
     private final String findByRoomQuery;
     private final String updateQuery;
+    private final String getQuery;
 
     public TaskJDBCAdapter(GenericDao genericDAO) {
         this.genericDAO = genericDAO;
         this.updateQuery = SqlReader.get(UPDATE_TASK_SQL_PATH);
         this.findByRoomQuery = SqlReader.get(FIND_TASK_BY_ROOM_SQL_PATH);
+        this.getQuery = SqlReader.get(GET_TASK_SQL_PATH);
     }
 
     @Override
@@ -53,5 +57,16 @@ public class TaskJDBCAdapter implements TaskRepository {
             throw new SqlResourceException(ErrorCode.INSERT_JDBC, ex);
         }
     }
+
+    @Override
+    public Optional<Task> get(Integer taskId) {
+        try {
+            var params = new MapSqlParameterSource()
+                    .addValue("id", taskId);
+            return genericDAO.findObject(getQuery, params, TaskVO.class).map(TaskVO::toDomain);
+        } catch (DataAccessException ex) {
+            log.error("Ocurrio un error al buscar la ronda de la base", ex);
+            throw new NotFoundJdbcException(ErrorCode.FIND_JDBC, ex);
+        }    }
 
 }
