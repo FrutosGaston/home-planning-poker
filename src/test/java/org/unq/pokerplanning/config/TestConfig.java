@@ -13,7 +13,6 @@ import org.springframework.web.client.RestTemplate;
 import java.time.Duration;
 
 @TestConfiguration
-@ComponentScan("org.springframework.cloud.sleuth.autoconfig")
 @Slf4j
 public class TestConfig {
 
