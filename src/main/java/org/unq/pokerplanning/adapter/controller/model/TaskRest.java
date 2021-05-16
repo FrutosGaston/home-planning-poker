@@ -33,4 +33,12 @@ public class TaskRest {
                 .build();
     }
 
+    public Task toDomain() {
+        return Task.builder()
+                .roomId(this.roomId)
+                .title(this.title)
+                .finalEstimation(this.finalEstimation)
+                .build();
+    }
+
 }

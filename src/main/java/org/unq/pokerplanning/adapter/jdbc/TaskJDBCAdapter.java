@@ -21,15 +21,18 @@ public class TaskJDBCAdapter implements TaskRepository {
 
     private static final String FIND_TASK_BY_ROOM_SQL_PATH = "sql/find-task-by-room.sql";
     private static final String UPDATE_TASK_SQL_PATH = "sql/update-task.sql";
+    private static final String INSERT_TASK_SQL_PATH = "sql/insert-task.sql";
     private static final String GET_TASK_SQL_PATH = "sql/get-task.sql";
     private final GenericDao genericDAO;
     private final String findByRoomQuery;
     private final String updateQuery;
+    private final String insertQuery;
     private final String getQuery;
 
     public TaskJDBCAdapter(GenericDao genericDAO) {
         this.genericDAO = genericDAO;
         this.updateQuery = SqlReader.get(UPDATE_TASK_SQL_PATH);
+        this.insertQuery = SqlReader.get(INSERT_TASK_SQL_PATH);
         this.findByRoomQuery = SqlReader.get(FIND_TASK_BY_ROOM_SQL_PATH);
         this.getQuery = SqlReader.get(GET_TASK_SQL_PATH);
     }
@@ -50,10 +53,22 @@ public class TaskJDBCAdapter implements TaskRepository {
     @Override
     public Integer update(Task task) {
         try {
-            MapSqlParameterSource map = TaskVO.of(task).toMap();
+            MapSqlParameterSource map = TaskVO.of(task).toUpdateMap();
             return genericDAO.updateObject(updateQuery, map);
         } catch (DataAccessException ex) {
             log.error("Ocurrio un error al realizar el update de la estimacion: {}, ex: {}", task, ex);
+            throw new SqlResourceException(ErrorCode.INSERT_JDBC, ex);
+        }
+    }
+
+    @Override
+    public Integer create(Task task) {
+        try {
+            MapSqlParameterSource map = TaskVO.of(task).toCreateMap();
+            String[] keys = {"id"};
+            return genericDAO.insert(insertQuery, map, keys).intValue();
+        } catch (DataAccessException ex) {
+            log.error("Ocurrio un error al realizar la creacion de la tarea: {}, ex: {}", task, ex);
             throw new SqlResourceException(ErrorCode.INSERT_JDBC, ex);
         }
     }

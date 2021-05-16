@@ -11,7 +11,9 @@ import java.util.List;
 @Value
 @Builder
 public class Task {
+    @With
     Integer id;
+
     Integer roomId;
     String title;
     String finalEstimation;

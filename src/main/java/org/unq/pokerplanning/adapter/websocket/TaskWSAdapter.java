@@ -26,4 +26,12 @@ public class TaskWSAdapter implements TaskMessenger {
                 TaskWS.of(task));
     }
 
+    public void created(Task task) {
+        Integer roomId = task.getRoomId();
+        log.info("sending task created event to room: {} and task: {}", roomId, task);
+        template.convertAndSend(
+                String.format("/room/%s/tasks/created", roomId),
+                TaskWS.of(task));
+    }
+
 }

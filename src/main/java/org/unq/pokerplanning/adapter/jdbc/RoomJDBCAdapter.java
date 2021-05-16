@@ -43,7 +43,8 @@ public class RoomJDBCAdapter implements RoomRepository {
         } catch (DataAccessException ex) {
             log.error("Ocurrio un error al realizar el insert de la sala: {}, ex: {}", room, ex);
             throw new SqlResourceException(ErrorCode.INSERT_JDBC, ex);
-        }    }
+        }
+    }
 
     @Override
     public Optional<Room> getById(Integer roomId) {

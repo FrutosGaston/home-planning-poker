@@ -43,7 +43,14 @@ public class TaskVO {
                 .build();
     }
 
-    public MapSqlParameterSource toMap() {
+    public MapSqlParameterSource toCreateMap() {
+        return new MapSqlParameterSource()
+                .addValue("id", this.id)
+                .addValue("title", this.title)
+                .addValue("room_id", this.roomId);
+    }
+
+    public MapSqlParameterSource toUpdateMap() {
         return new MapSqlParameterSource()
                 .addValue("id", this.id)
                 .addValue("title", this.title)

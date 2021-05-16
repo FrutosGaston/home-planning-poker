@@ -8,5 +8,6 @@ import java.util.Optional;
 public interface TaskRepository {
     List<Task> findByRoom(Integer roomId);
     Integer update(Task task);
+    Integer create(Task task);
     Optional<Task> get(Integer taskId);
 }

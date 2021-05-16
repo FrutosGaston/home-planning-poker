@@ -4,4 +4,5 @@ import org.unq.pokerplanning.domain.Task;
 
 public interface TaskMessenger {
     void updated(Task task);
+    void created(Task task);
 }

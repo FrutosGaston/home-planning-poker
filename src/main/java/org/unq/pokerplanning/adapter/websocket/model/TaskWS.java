@@ -7,6 +7,7 @@ import org.unq.pokerplanning.domain.Task;
 
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Value
@@ -20,13 +21,14 @@ public class TaskWS {
     LocalDateTime createdAt;
 
     public static TaskWS of(Task task) {
+        List<Estimation> estimations = Optional.ofNullable(task.getEstimations()).orElse(List.of());
         return TaskWS.builder()
                 .id(task.getId())
                 .finalEstimation(task.getFinalEstimation())
                 .title(task.getTitle())
                 .roomId(task.getRoomId())
-                .estimations(task.getEstimations().stream()
-                        .map(estimation -> EstimationWS.of(estimation))
+                .estimations(estimations.stream()
+                        .map(EstimationWS::of)
                         .collect(Collectors.toList()))
                 .createdAt(task.getCreatedAt())
                 .build();

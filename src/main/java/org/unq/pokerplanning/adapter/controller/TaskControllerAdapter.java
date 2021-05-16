@@ -6,6 +6,7 @@ import org.unq.pokerplanning.adapter.controller.model.EstimationRest;
 import org.unq.pokerplanning.adapter.controller.model.TaskPatchRest;
 import org.unq.pokerplanning.adapter.controller.model.TaskRest;
 import org.unq.pokerplanning.application.port.in.CreateEstimationCommand;
+import org.unq.pokerplanning.application.port.in.CreateTaskCommand;
 import org.unq.pokerplanning.application.port.in.FindTaskQuery;
 import org.unq.pokerplanning.application.port.in.UpdateTaskCommand;
 import org.unq.pokerplanning.domain.Task;
@@ -21,17 +22,25 @@ public final class TaskControllerAdapter {
     private final FindTaskQuery findTaskQuery;
     private final CreateEstimationCommand createEstimationCommand;
     private final UpdateTaskCommand updateTaskCommand;
+    private final CreateTaskCommand createTaskCommand;
 
-    public TaskControllerAdapter(FindTaskQuery findTaskQuery, CreateEstimationCommand createEstimationCommand, UpdateTaskCommand updateTaskCommand) {
+    public TaskControllerAdapter(FindTaskQuery findTaskQuery, CreateEstimationCommand createEstimationCommand,
+                                 UpdateTaskCommand updateTaskCommand, CreateTaskCommand createTaskCommand) {
         this.findTaskQuery = findTaskQuery;
         this.createEstimationCommand = createEstimationCommand;
         this.updateTaskCommand = updateTaskCommand;
+        this.createTaskCommand = createTaskCommand;
     }
 
     @GetMapping
     public List<TaskRest> findTasks(@RequestParam Integer roomId) {
         List<Task> tasks = findTaskQuery.execute(roomId);
         return tasks.stream().map(TaskRest::from).collect(Collectors.toList());
+    }
+
+    @PostMapping
+    public Integer createTask(@RequestBody TaskRest taskRest) {
+        return createTaskCommand.execute(taskRest.toDomain());
     }
 
     @PatchMapping("/{taskId}")
