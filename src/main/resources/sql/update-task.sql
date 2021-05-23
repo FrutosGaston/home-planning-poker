@@ -1,4 +1,4 @@
 update task
-set final_estimation = coalesce(NULLIF(:final_estimation, ''), final_estimation),
+set estimation_id = coalesce(:estimation_id, estimation_id),
     title = coalesce(NULLIF(:title, ''), title)
 where id = :id;

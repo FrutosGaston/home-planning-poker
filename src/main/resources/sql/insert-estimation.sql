@@ -1,2 +1,2 @@
-INSERT INTO estimation(name, guest_user_id, task_id)
-VALUES (:name, :guest_user_id, :task_id)
+INSERT INTO estimation(card_id, guest_user_id, task_id)
+VALUES (:card_id, :guest_user_id, :task_id)

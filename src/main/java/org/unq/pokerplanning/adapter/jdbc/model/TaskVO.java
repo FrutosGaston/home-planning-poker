@@ -19,14 +19,14 @@ import java.time.LocalDateTime;
 public class TaskVO {
     private Integer id;
     private String title;
-    private String finalEstimation;
+    private Integer estimationId;
     private Integer roomId;
     private LocalDateTime createdAt;
 
     public static TaskVO of(Task task) {
         return TaskVO.builder()
                 .id(task.getId())
-                .finalEstimation(task.getFinalEstimation())
+                .estimationId(task.getEstimationId())
                 .title(task.getTitle())
                 .roomId(task.getRoomId())
                 .createdAt(task.getCreatedAt())
@@ -37,7 +37,7 @@ public class TaskVO {
         return Task.builder()
                 .id(this.id)
                 .title(this.title)
-                .finalEstimation(this.finalEstimation)
+                .estimationId(this.estimationId)
                 .roomId(this.roomId)
                 .createdAt(this.createdAt)
                 .build();
@@ -54,6 +54,6 @@ public class TaskVO {
         return new MapSqlParameterSource()
                 .addValue("id", this.id)
                 .addValue("title", this.title)
-                .addValue("final_estimation", this.finalEstimation);
+                .addValue("estimation_id", this.estimationId);
     }
 }

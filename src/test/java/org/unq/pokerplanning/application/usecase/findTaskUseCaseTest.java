@@ -7,10 +7,9 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor;
 import org.unq.pokerplanning.application.port.out.EstimationRepository;
-import org.unq.pokerplanning.application.port.out.GuestUserRepository;
 import org.unq.pokerplanning.application.port.out.TaskRepository;
+import org.unq.pokerplanning.application.service.EstimationService;
 import org.unq.pokerplanning.domain.Estimation;
-import org.unq.pokerplanning.domain.GuestUser;
 import org.unq.pokerplanning.domain.Task;
 
 import java.util.List;
@@ -29,6 +28,7 @@ class findTaskUseCaseTest {
     private static final boolean WAIT_FOR_TASK_TO_COMPLETE_ON_SHUTDOWN = true;
 
     private final TaskRepository taskRepository = mock(TaskRepository.class);
+    private final EstimationService estimationService = mock(EstimationService.class);
     private final EstimationRepository estimationRepository = mock(EstimationRepository.class);
 
     @BeforeAll
@@ -54,7 +54,7 @@ class findTaskUseCaseTest {
         when(taskRepository.findByRoom(roomId)).thenReturn(List.of(task));
         when(estimationRepository.findByTask(taskId)).thenReturn(List.of(estimation));
 
-        FindTaskUseCase findTaskUseCase = new FindTaskUseCase(taskRepository, estimationRepository);
+        FindTaskUseCase findTaskUseCase = new FindTaskUseCase(taskRepository, estimationRepository, estimationService);
 
         //when
         Task resultTask = findTaskUseCase.execute(roomId).get(0);

@@ -34,4 +34,13 @@ public class TaskWSAdapter implements TaskMessenger {
                 TaskWS.of(task));
     }
 
+    @Override
+    public void estimated(Task task) {
+        Integer roomId = task.getRoomId();
+        log.info("sending task estimated event to room: {} and task: {}", roomId, task);
+        template.convertAndSend(
+                String.format("/room/%s/tasks/estimated", roomId),
+                TaskWS.of(task));
+    }
+
 }

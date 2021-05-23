@@ -5,10 +5,7 @@ import org.springframework.web.bind.annotation.*;
 import org.unq.pokerplanning.adapter.controller.model.EstimationRest;
 import org.unq.pokerplanning.adapter.controller.model.TaskPatchRest;
 import org.unq.pokerplanning.adapter.controller.model.TaskRest;
-import org.unq.pokerplanning.application.port.in.CreateEstimationCommand;
-import org.unq.pokerplanning.application.port.in.CreateTaskCommand;
-import org.unq.pokerplanning.application.port.in.FindTaskQuery;
-import org.unq.pokerplanning.application.port.in.UpdateTaskCommand;
+import org.unq.pokerplanning.application.port.in.*;
 import org.unq.pokerplanning.domain.Task;
 
 import java.util.List;
@@ -22,13 +19,16 @@ public final class TaskControllerAdapter {
     private final FindTaskQuery findTaskQuery;
     private final CreateEstimationCommand createEstimationCommand;
     private final UpdateTaskCommand updateTaskCommand;
+    private final CreateFinalEstimationCommand createFinalEstimationCommand;
     private final CreateTaskCommand createTaskCommand;
 
     public TaskControllerAdapter(FindTaskQuery findTaskQuery, CreateEstimationCommand createEstimationCommand,
-                                 UpdateTaskCommand updateTaskCommand, CreateTaskCommand createTaskCommand) {
+                                 UpdateTaskCommand updateTaskCommand, CreateFinalEstimationCommand createFinalEstimationCommand,
+                                 CreateTaskCommand createTaskCommand) {
         this.findTaskQuery = findTaskQuery;
         this.createEstimationCommand = createEstimationCommand;
         this.updateTaskCommand = updateTaskCommand;
+        this.createFinalEstimationCommand = createFinalEstimationCommand;
         this.createTaskCommand = createTaskCommand;
     }
 
@@ -46,6 +46,11 @@ public final class TaskControllerAdapter {
     @PatchMapping("/{taskId}")
     public Integer patchTask(@PathVariable Integer taskId, @RequestBody TaskPatchRest taskPatchRest) {
         return updateTaskCommand.execute(taskPatchRest.toDomain(taskId));
+    }
+
+    @PostMapping("/final-estimations")
+    public Integer finalEstimation(@RequestBody EstimationRest estimation) {
+        return createFinalEstimationCommand.execute(estimation.toDomain());
     }
 
     @PostMapping("/estimations")

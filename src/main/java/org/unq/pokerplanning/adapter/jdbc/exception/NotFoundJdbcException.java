@@ -9,5 +9,9 @@ public final class NotFoundJdbcException extends GenericException {
         super(errorCode, cause);
     }
 
+    public NotFoundJdbcException(ErrorCode errorCode) {
+        super(errorCode);
+    }
+
 }
 

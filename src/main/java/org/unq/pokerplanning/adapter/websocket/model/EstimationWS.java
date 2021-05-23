@@ -2,9 +2,8 @@ package org.unq.pokerplanning.adapter.websocket.model;
 
 import lombok.Builder;
 import lombok.Value;
-import org.unq.pokerplanning.adapter.jdbc.model.EstimationVO;
+import org.unq.pokerplanning.domain.Card;
 import org.unq.pokerplanning.domain.Estimation;
-import org.unq.pokerplanning.domain.Task;
 
 import java.time.LocalDateTime;
 
@@ -12,7 +11,7 @@ import java.time.LocalDateTime;
 @Builder
 public class EstimationWS {
     Integer id;
-    String name;
+    Card card;
     Integer taskId;
     Integer guestUserId;
     LocalDateTime createdAt;
@@ -20,7 +19,7 @@ public class EstimationWS {
     public static EstimationWS of(Estimation estimation) {
         return EstimationWS.builder()
                 .id(estimation.getId())
-                .name(estimation.getName())
+                .card(estimation.getCard())
                 .taskId(estimation.getTaskId())
                 .guestUserId(estimation.getGuestUserId())
                 .build();

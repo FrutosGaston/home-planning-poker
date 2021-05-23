@@ -16,7 +16,8 @@ public class Task {
 
     Integer roomId;
     String title;
-    String finalEstimation;
+    Integer estimationId;
+    @With Estimation estimation;
     @With List<Estimation> estimations;
     LocalDateTime createdAt;
 }

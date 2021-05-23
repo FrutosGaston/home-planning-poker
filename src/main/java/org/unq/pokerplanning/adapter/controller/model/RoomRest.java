@@ -12,6 +12,7 @@ import java.time.LocalDateTime;
 public class RoomRest {
 
     Integer id;
+    Integer deckId;
     String title;
     String description;
     @JsonFormat(pattern="yyyy-MM-dd HH:mm:ss")
@@ -21,6 +22,7 @@ public class RoomRest {
         return Room.builder()
                 .title(this.title)
                 .description(this.description)
+                .deckId(this.deckId)
                 .createdAt(this.createdAt)
                 .build();
     }
@@ -30,6 +32,7 @@ public class RoomRest {
                 .id(room.getId())
                 .title(room.getTitle())
                 .description(room.getDescription())
+                .deckId(room.getDeckId())
                 .createdAt(room.getCreatedAt())
                 .build();
     }

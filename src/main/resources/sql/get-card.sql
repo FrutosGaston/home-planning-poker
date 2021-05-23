@@ -1,7 +1,6 @@
 SELECT id,
-       title,
-       description,
+       value,
        deck_id,
        created_at
-FROM room
+FROM card
 WHERE id = :id

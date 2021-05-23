@@ -15,7 +15,7 @@ import java.util.stream.Collectors;
 public class TaskWS {
     Integer id;
     String title;
-    String finalEstimation;
+    EstimationWS estimation;
     List<EstimationWS> estimations;
     Integer roomId;
     LocalDateTime createdAt;
@@ -24,7 +24,7 @@ public class TaskWS {
         List<Estimation> estimations = Optional.ofNullable(task.getEstimations()).orElse(List.of());
         return TaskWS.builder()
                 .id(task.getId())
-                .finalEstimation(task.getFinalEstimation())
+                .estimation(EstimationWS.of(task.getEstimation()))
                 .title(task.getTitle())
                 .roomId(task.getRoomId())
                 .estimations(estimations.stream()

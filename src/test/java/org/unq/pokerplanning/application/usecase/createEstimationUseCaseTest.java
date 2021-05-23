@@ -6,9 +6,11 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor;
+import org.unq.pokerplanning.application.port.out.CardRepository;
 import org.unq.pokerplanning.application.port.out.EstimationMessenger;
 import org.unq.pokerplanning.application.port.out.EstimationRepository;
 import org.unq.pokerplanning.application.port.out.TaskRepository;
+import org.unq.pokerplanning.application.service.EstimationService;
 import org.unq.pokerplanning.domain.Estimation;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -27,6 +29,7 @@ class createEstimationUseCaseTest {
     private final EstimationRepository estimationRepository = mock(EstimationRepository.class);
     private final EstimationMessenger estimationMessenger = mock(EstimationMessenger.class);
     private final TaskRepository taskRepository = mock(TaskRepository.class);
+    private final EstimationService estimationService = mock(EstimationService.class);
 
     @BeforeAll
     static void init() {
@@ -43,11 +46,11 @@ class createEstimationUseCaseTest {
     void createEstimationOk() {
 
         //given
-        Estimation estimation = Estimation.builder().name("1").taskId(1).guestUserId(1).build();
+        Estimation estimation = Estimation.builder().cardId(1).taskId(1).guestUserId(1).build();
 
         when(estimationRepository.create(estimation)).thenReturn(1);
 
-        CreateEstimationUseCase createEstimationUseCase = new CreateEstimationUseCase(estimationRepository, estimationMessenger, taskRepository);
+        CreateEstimationUseCase createEstimationUseCase = new CreateEstimationUseCase(estimationRepository, estimationMessenger, taskRepository, estimationService);
 
         //when
         Integer resultEstimationId = createEstimationUseCase.execute(estimation);

@@ -106,7 +106,7 @@ class TaskControllerAdapterTest {
         return Estimation.builder()
                 .taskId(taskId)
                 .guestUserId(guestUserId)
-                .name("1")
+                .cardId("1")
                 .build();
     }
 }

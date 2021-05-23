@@ -3,6 +3,7 @@ package org.unq.pokerplanning.adapter.controller.model;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.Builder;
 import lombok.Value;
+import org.unq.pokerplanning.domain.Card;
 import org.unq.pokerplanning.domain.Estimation;
 
 import java.time.LocalDateTime;
@@ -11,7 +12,8 @@ import java.time.LocalDateTime;
 @Builder
 public class EstimationRest {
     Integer id;
-    String name;
+    Card card;
+    Integer cardId;
     Integer taskId;
     Integer guestUserId;
     @JsonFormat(pattern="yyyy-MM-dd HH:mm:ss")
@@ -20,7 +22,7 @@ public class EstimationRest {
     public static EstimationRest from(Estimation estimation) {
         return EstimationRest.builder()
                 .id(estimation.getId())
-                .name(estimation.getName())
+                .card(estimation.getCard())
                 .taskId(estimation.getTaskId())
                 .guestUserId(estimation.getGuestUserId())
                 .createdAt(estimation.getCreatedAt())
@@ -29,7 +31,7 @@ public class EstimationRest {
 
     public Estimation toDomain() {
         return Estimation.builder()
-                .name(this.name)
+                .cardId(this.cardId)
                 .guestUserId(this.guestUserId)
                 .taskId(this.taskId)
                 .build();

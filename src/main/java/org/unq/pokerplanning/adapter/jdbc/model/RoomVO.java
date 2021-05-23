@@ -19,6 +19,7 @@ import java.time.LocalDateTime;
 @JsonNaming(PropertyNamingStrategy.SnakeCaseStrategy.class)
 public class RoomVO {
     private Integer id;
+    private Integer deckId;
     private String title;
     private String description;
     private LocalDateTime createdAt;
@@ -28,6 +29,7 @@ public class RoomVO {
                 .id(room.getId())
                 .title(room.getTitle())
                 .description(room.getDescription())
+                .deckId(room.getDeckId())
                 .createdAt(room.getCreatedAt())
                 .build();
     }
@@ -37,6 +39,7 @@ public class RoomVO {
                 .id(this.id)
                 .title(this.title)
                 .description(this.description)
+                .deckId(this.deckId)
                 .createdAt(this.createdAt)
                 .build();
     }
@@ -44,6 +47,7 @@ public class RoomVO {
     public MapSqlParameterSource toMap() {
         return new MapSqlParameterSource()
                 .addValue("title", this.title)
-                .addValue("description", this.description);
+                .addValue("description", this.description)
+                .addValue("deck_id", this.deckId);
     }
 }

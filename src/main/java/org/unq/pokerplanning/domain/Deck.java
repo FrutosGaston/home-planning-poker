@@ -2,15 +2,16 @@ package org.unq.pokerplanning.domain;
 
 import lombok.Builder;
 import lombok.Value;
+import lombok.With;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
-@Builder
 @Value
-public class Room {
+@Builder
+public class Deck {
     Integer id;
-    Integer deckId;
-    String title;
-    String description;
+    String name;
+    @With List<Card> cards;
     LocalDateTime createdAt;
 }

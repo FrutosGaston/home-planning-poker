@@ -12,6 +12,7 @@ import org.unq.pokerplanning.config.ErrorCode;
 import org.unq.pokerplanning.domain.Estimation;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Component
@@ -19,14 +20,17 @@ import java.util.stream.Collectors;
 public class EstimationJDBCAdapter implements EstimationRepository {
 
     private static final String FIND_ESTIMATION_BY_TASK_SQL_PATH = "sql/find-estimation-by-task.sql";
+    private static final String GET_ESTIMATION_SQL_PATH = "sql/get-estimation.sql";
     private static final String INSERT_ESTIMATION_SQL_PATH = "sql/insert-estimation.sql";
     private final GenericDao genericDAO;
     private final String findByTaskQuery;
+    private final String getEstimationQuery;
     private final String insertQuery;
 
     public EstimationJDBCAdapter(GenericDao genericDAO) {
         this.genericDAO = genericDAO;
         this.findByTaskQuery = SqlReader.get(FIND_ESTIMATION_BY_TASK_SQL_PATH);
+        this.getEstimationQuery = SqlReader.get(GET_ESTIMATION_SQL_PATH);
         this.insertQuery = SqlReader.get(INSERT_ESTIMATION_SQL_PATH);
     }
 
@@ -38,7 +42,20 @@ public class EstimationJDBCAdapter implements EstimationRepository {
             return genericDAO.findObjects(findByTaskQuery, params, EstimationVO.class).stream()
                     .map(EstimationVO::toDomain).collect(Collectors.toList());
         } catch (DataAccessException ex) {
-            log.error("Ocurrio un error al buscar la ronda de la base", ex);
+            log.error("Ocurrio un error al buscar las estimaciones de la base", ex);
+            throw new NotFoundJdbcException(ErrorCode.FIND_JDBC, ex);
+        }
+    }
+
+    @Override
+    public Optional<Estimation> get(Integer estimationId) {
+        try {
+            var params = new MapSqlParameterSource()
+                    .addValue("id", estimationId);
+            return genericDAO.findObject(getEstimationQuery, params, EstimationVO.class)
+                    .map(EstimationVO::toDomain);
+        } catch (DataAccessException ex) {
+            log.error("Ocurrio un error al buscar la estimacion de la base", ex);
             throw new NotFoundJdbcException(ErrorCode.FIND_JDBC, ex);
         }
     }

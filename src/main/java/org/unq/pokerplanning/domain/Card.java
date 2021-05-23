@@ -5,12 +5,12 @@ import lombok.Value;
 
 import java.time.LocalDateTime;
 
-@Builder
 @Value
-public class Room {
+@Builder
+public class Card {
     Integer id;
+    String value;
     Integer deckId;
-    String title;
-    String description;
     LocalDateTime createdAt;
+
 }

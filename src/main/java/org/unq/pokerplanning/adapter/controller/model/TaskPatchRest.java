@@ -9,7 +9,6 @@ import org.unq.pokerplanning.domain.Task;
 public class TaskPatchRest {
     Integer id;
     String title;
-    String finalEstimation;
     Integer roomId;
     String createdAt;
 
@@ -17,7 +16,6 @@ public class TaskPatchRest {
         return Task.builder()
                 .id(taskId)
                 .roomId(this.roomId)
-                .finalEstimation(this.finalEstimation)
                 .title(this.title)
                 .build();
     }

@@ -18,14 +18,14 @@ import java.time.LocalDateTime;
 @JsonNaming(PropertyNamingStrategy.SnakeCaseStrategy.class)
 public class EstimationVO {
     private Integer id;
-    private String name;
+    private Integer cardId;
     private Integer taskId;
     private Integer guestUserId;
     private LocalDateTime createdAt;
 
     public static EstimationVO of(Estimation estimation) {
         return EstimationVO.builder()
-                .name(estimation.getName())
+                .cardId(estimation.getCardId())
                 .taskId(estimation.getTaskId())
                 .guestUserId(estimation.getGuestUserId())
                 .build();
@@ -34,7 +34,7 @@ public class EstimationVO {
     public Estimation toDomain() {
         return Estimation.builder()
                 .id(this.id)
-                .name(this.name)
+                .cardId(this.cardId)
                 .taskId(this.taskId)
                 .guestUserId(this.guestUserId)
                 .createdAt(this.createdAt)
@@ -43,7 +43,7 @@ public class EstimationVO {
 
     public MapSqlParameterSource toMap() {
         return new MapSqlParameterSource()
-                .addValue("name", this.name)
+                .addValue("card_id", this.cardId)
                 .addValue("guest_user_id", this.guestUserId)
                 .addValue("task_id", this.taskId);
     }
