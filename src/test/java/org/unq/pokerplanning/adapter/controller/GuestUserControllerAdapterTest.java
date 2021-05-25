@@ -1,19 +1,19 @@
 package org.unq.pokerplanning.adapter.controller;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Test;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.context.annotation.Import;
+import org.springframework.test.web.servlet.MockMvc;
 import org.unq.pokerplanning.adapter.controller.model.GuestUserRest;
 import org.unq.pokerplanning.application.port.in.CreateGuestUserCommand;
 import org.unq.pokerplanning.application.port.in.FindGuestUserQuery;
 import org.unq.pokerplanning.config.TestConfig;
 import org.unq.pokerplanning.domain.GuestUser;
-import org.junit.jupiter.api.DisplayName;
-import org.junit.jupiter.api.Test;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.mock.mockito.MockBean;
-import org.springframework.context.annotation.Import;
-import org.springframework.test.web.servlet.MockMvc;
 
 import java.util.Collections;
 
@@ -27,7 +27,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @DisplayName("GuestUserController Adapter Test")
 @SpringBootTest
 @AutoConfigureMockMvc
-@Import(TestConfig.class)
+// @Import(TestConfig.class)
 class GuestUserControllerAdapterTest {
 
     @Autowired

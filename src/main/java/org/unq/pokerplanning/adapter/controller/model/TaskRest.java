@@ -37,10 +37,11 @@ public class TaskRest {
     }
 
     public Task toDomain() {
+        val estimation = Optional.ofNullable(this.estimation).map(EstimationRest::toDomain).orElse(null);
         return Task.builder()
                 .roomId(this.roomId)
                 .title(this.title)
-                .estimation(this.estimation.toDomain())
+                .estimation(estimation)
                 .build();
     }
 

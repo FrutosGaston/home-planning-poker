@@ -7,6 +7,7 @@ import lombok.With;
 
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Optional;
 
 @Value
 @Builder
@@ -20,4 +21,8 @@ public class Task {
     @With Estimation estimation;
     @With List<Estimation> estimations;
     LocalDateTime createdAt;
+
+    public List<Estimation> getEstimations() {
+        return Optional.ofNullable(estimations).orElse(List.of());
+    }
 }

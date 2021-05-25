@@ -2,10 +2,10 @@ package org.unq.pokerplanning.application.service;
 
 import lombok.val;
 import org.springframework.stereotype.Component;
-import org.unq.pokerplanning.adapter.jdbc.exception.NotFoundJdbcException;
 import org.unq.pokerplanning.application.port.out.CardRepository;
 import org.unq.pokerplanning.application.port.out.EstimationRepository;
 import org.unq.pokerplanning.config.ErrorCode;
+import org.unq.pokerplanning.config.exception.NotFoundException;
 import org.unq.pokerplanning.domain.Estimation;
 
 @Component
@@ -20,7 +20,7 @@ public class EstimationService {
     }
 
     public Estimation getCompleteEstimation(Integer estimationId) {
-        val estimation = estimationRepository.get(estimationId).orElseThrow(() -> new NotFoundJdbcException(ErrorCode.TYPE_NOT_FOUND));
+        val estimation = estimationRepository.get(estimationId).orElseThrow(() -> new NotFoundException(ErrorCode.TYPE_NOT_FOUND));
         return completeEstimation(estimation);
     }
 

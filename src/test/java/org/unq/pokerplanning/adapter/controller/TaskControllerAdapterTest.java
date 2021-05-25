@@ -4,15 +4,12 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
-import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.context.annotation.Import;
 import org.springframework.test.web.servlet.MockMvc;
 import org.unq.pokerplanning.adapter.controller.model.TaskRest;
-import org.unq.pokerplanning.application.port.in.CreateEstimationCommand;
-import org.unq.pokerplanning.application.port.in.FindTaskQuery;
-import org.unq.pokerplanning.application.port.in.UpdateTaskCommand;
+import org.unq.pokerplanning.application.port.in.*;
 import org.unq.pokerplanning.config.TestConfig;
 import org.unq.pokerplanning.domain.Estimation;
 import org.unq.pokerplanning.domain.Task;
@@ -27,9 +24,8 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @DisplayName("TaskController Adapter Test")
-@SpringBootTest
-@AutoConfigureMockMvc
-@Import(TestConfig.class)
+@WebMvcTest(TaskControllerAdapter.class)
+// @Import(TestConfig.class)
 class TaskControllerAdapterTest {
 
     @Autowired
@@ -40,6 +36,12 @@ class TaskControllerAdapterTest {
 
     @MockBean
     private CreateEstimationCommand createEstimationCommand;
+
+    @MockBean
+    private CreateFinalEstimationCommand createFinalEstimationCommand;
+
+    @MockBean
+    private CreateTaskCommand createTaskCommand;
 
     @MockBean
     private UpdateTaskCommand updateTaskCommand;
@@ -56,9 +58,35 @@ class TaskControllerAdapterTest {
     @DisplayName("when createEstimation is called, the adapter must return its id")
     void createEstimation() throws Exception {
         Integer expectedId = 1;
-        String bodyJson = "{\"taskId\":\"" + taskId + "\", \"name\":" + guestUserId +", \"guestUserId\":" + guestUserId + "}";
+        String bodyJson = "{\"taskId\":\"" + taskId + "\", \"cardId\":" + taskId +", \"guestUserId\":" + guestUserId + "}";
         when(createEstimationCommand.execute(getEstimation())).thenReturn(expectedId);
         this.mockMvc.perform(post("/api/v1/tasks/estimations")
+                .content(bodyJson).contentType("application/json"))
+                .andDo(print())
+                .andExpect(status().isOk())
+                .andExpect(content().string(expectedId.toString()));
+    }
+
+    @Test
+    @DisplayName("when createFinalEstimation is called, the adapter must return its id")
+    void createFinalEstimation() throws Exception {
+        Integer expectedId = 1;
+        String bodyJson = "{\"taskId\":\"" + taskId + "\", \"cardId\":" + taskId +", \"guestUserId\":" + guestUserId + "}";
+        when(createFinalEstimationCommand.execute(getEstimation())).thenReturn(expectedId);
+        this.mockMvc.perform(post("/api/v1/tasks/final-estimations")
+                .content(bodyJson).contentType("application/json"))
+                .andDo(print())
+                .andExpect(status().isOk())
+                .andExpect(content().string(expectedId.toString()));
+    }
+
+    @Test
+    @DisplayName("when createTask is called, the adapter must return its id")
+    void createTask() throws Exception {
+        Integer expectedId = 1;
+        String bodyJson = "{\"roomId\":\"" + roomId + "\", \"title\": \"" + title + "\"}";
+        when(createTaskCommand.execute(getTask())).thenReturn(expectedId);
+        this.mockMvc.perform(post("/api/v1/tasks")
                 .content(bodyJson).contentType("application/json"))
                 .andDo(print())
                 .andExpect(status().isOk())
@@ -90,7 +118,6 @@ class TaskControllerAdapterTest {
         return Task.builder()
                 .title(title)
                 .roomId(roomId)
-                .estimations(List.of())
                 .build();
     }
 
@@ -106,7 +133,7 @@ class TaskControllerAdapterTest {
         return Estimation.builder()
                 .taskId(taskId)
                 .guestUserId(guestUserId)
-                .cardId("1")
+                .cardId(1)
                 .build();
     }
 }
