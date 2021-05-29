@@ -18,7 +18,7 @@ import static org.mockito.Mockito.*;
 
 @DisplayName("AddUserToRoomUseCase Test")
 @ExtendWith(MockitoExtension.class)
-class createGuestUserUseCaseTest {
+class CreateGuestUserUseCaseTest {
 
     private static final int CORE_POOL_SIZE = 20;
     private static final int MAX_POOL_SIZE = 1000;

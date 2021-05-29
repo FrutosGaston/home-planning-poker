@@ -6,30 +6,32 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor;
+import org.unq.pokerplanning.application.port.out.EstimationMessenger;
 import org.unq.pokerplanning.application.port.out.EstimationRepository;
+import org.unq.pokerplanning.application.port.out.TaskMessenger;
 import org.unq.pokerplanning.application.port.out.TaskRepository;
 import org.unq.pokerplanning.application.service.EstimationService;
 import org.unq.pokerplanning.domain.Estimation;
 import org.unq.pokerplanning.domain.Task;
 
-import java.util.List;
+import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.when;
+import static org.mockito.Mockito.*;
 
-@DisplayName("findTaskUseCase Test")
+@DisplayName("createFinalEstimationUseCase Test")
 @ExtendWith(MockitoExtension.class)
-class findTaskUseCaseTest {
+class CreateFinalEstimationUseCaseTest {
 
     private static final int CORE_POOL_SIZE = 20;
     private static final int MAX_POOL_SIZE = 1000;
     private static final String ASYNC_PREFIX = "async-";
     private static final boolean WAIT_FOR_TASK_TO_COMPLETE_ON_SHUTDOWN = true;
 
+    private final EstimationRepository estimationRepository = mock(EstimationRepository.class);
+    private final TaskMessenger taskMessenger = mock(TaskMessenger.class);
     private final TaskRepository taskRepository = mock(TaskRepository.class);
     private final EstimationService estimationService = mock(EstimationService.class);
-    private final EstimationRepository estimationRepository = mock(EstimationRepository.class);
 
     @BeforeAll
     static void init() {
@@ -42,26 +44,27 @@ class findTaskUseCaseTest {
     }
 
     @Test
-    @DisplayName("When findTask is executed Should Return a list of tasks with their estimations")
-    void findTaskOk() {
+    @DisplayName("When createFinalEstimation is executed Should Return its id")
+    void createFinalEstimationOk() {
 
         //given
-        Integer roomId = 1;
-        Integer taskId = 1;
-        Task task = Task.builder().id(taskId).title("task 1").roomId(roomId).build();
-        Estimation estimation = Estimation.builder().taskId(taskId).build();
+        Integer estimationId = 1;
+        Estimation estimation = Estimation.builder().id(estimationId).cardId(1).taskId(1).guestUserId(1).build();
+        Task task = Task.builder().id(1).build();
 
-        when(taskRepository.findByRoom(roomId)).thenReturn(List.of(task));
-        when(estimationRepository.findByTask(taskId)).thenReturn(List.of(estimation));
+        when(estimationRepository.create(estimation)).thenReturn(1);
+        when(taskRepository.get(estimation.getTaskId())).thenReturn(Optional.of(task));
+        when(taskRepository.update(any(Task.class))).thenReturn(1);
 
-        FindTaskUseCase findTaskUseCase = new FindTaskUseCase(taskRepository, estimationRepository, estimationService);
+        CreateFinalEstimationUseCase createFinalEstimationUseCase = new CreateFinalEstimationUseCase(estimationRepository, taskMessenger, taskRepository, estimationService);
 
         //when
-        Task resultTask = findTaskUseCase.execute(roomId).get(0);
+        Integer resultEstimationId = createFinalEstimationUseCase.execute(estimation);
 
         //then
-        assertEquals(task.getId(), resultTask.getId());
-        assertEquals(estimation, resultTask.getEstimations().get(0));
+        verify(taskRepository, times(1)).update(any(Task.class));
+        verify(taskMessenger, times(1)).estimated(task);
+        assertEquals(1, resultEstimationId);
     }
 
 }

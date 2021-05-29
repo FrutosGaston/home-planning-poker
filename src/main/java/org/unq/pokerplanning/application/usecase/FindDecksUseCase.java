@@ -11,12 +11,12 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 @Component
-public class FindDecksUseCae implements FindDecksQuery {
+public class FindDecksUseCase implements FindDecksQuery {
 
     private final DeckRepository deckRepository;
     private final CardRepository cardRepository;
 
-    public FindDecksUseCae(DeckRepository deckRepository, CardRepository cardRepository) {
+    public FindDecksUseCase(DeckRepository deckRepository, CardRepository cardRepository) {
         this.deckRepository = deckRepository;
         this.cardRepository = cardRepository;
     }

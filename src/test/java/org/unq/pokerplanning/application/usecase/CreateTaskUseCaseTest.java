@@ -6,18 +6,19 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor;
-import org.unq.pokerplanning.application.port.out.EstimationRepository;
+import org.unq.pokerplanning.application.port.out.RoomRepository;
 import org.unq.pokerplanning.application.port.out.TaskMessenger;
 import org.unq.pokerplanning.application.port.out.TaskRepository;
+import org.unq.pokerplanning.domain.Room;
 import org.unq.pokerplanning.domain.Task;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
-@DisplayName("updateTaskUseCase Test")
+@DisplayName("AddUserToRoomUseCase Test")
 @ExtendWith(MockitoExtension.class)
-class updateTaskUseCaseTest {
+class CreateTaskUseCaseTest {
 
     private static final int CORE_POOL_SIZE = 20;
     private static final int MAX_POOL_SIZE = 1000;
@@ -25,7 +26,6 @@ class updateTaskUseCaseTest {
     private static final boolean WAIT_FOR_TASK_TO_COMPLETE_ON_SHUTDOWN = true;
 
     private final TaskRepository taskRepository = mock(TaskRepository.class);
-    private final EstimationRepository estimationRepository = mock(EstimationRepository.class);
     private final TaskMessenger taskMessenger = mock(TaskMessenger.class);
 
     @BeforeAll
@@ -39,22 +39,21 @@ class updateTaskUseCaseTest {
     }
 
     @Test
-    @DisplayName("When updateTask is executed Should Return an integer indicating that it worked well")
-    void updateTaskOk() {
+    @DisplayName("When createTask is executed Should Return its id")
+    void createTaskOk() {
 
         //given
-        Integer updateResult = 1;
-        Task task = Task.builder().build();
+        Task task = Task.builder().title("Una tarea").build();
 
-        when(taskRepository.update(task)).thenReturn(updateResult);
+        when(taskRepository.create(task)).thenReturn(1);
 
-        UpdateTaskUseCase updateTaskUseCase = new UpdateTaskUseCase(taskRepository, taskMessenger, estimationRepository);
+        CreateTaskUseCase createTaskUseCase = new CreateTaskUseCase(taskMessenger, taskRepository);
 
         //when
-        Integer resultTask = updateTaskUseCase.execute(task);
+        Integer resultGuestUser = createTaskUseCase.execute(task);
 
         //then
-        assertEquals(updateResult, resultTask);
+        assertEquals(1, resultGuestUser);
     }
 
 }

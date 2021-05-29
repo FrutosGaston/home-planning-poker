@@ -6,27 +6,25 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor;
-import org.unq.pokerplanning.application.port.out.EstimationRepository;
+import org.unq.pokerplanning.application.port.out.GuestUserMessenger;
 import org.unq.pokerplanning.application.port.out.GuestUserRepository;
-import org.unq.pokerplanning.domain.Estimation;
+import org.unq.pokerplanning.application.port.out.RoomRepository;
 import org.unq.pokerplanning.domain.GuestUser;
-
-import java.util.List;
+import org.unq.pokerplanning.domain.Room;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.when;
+import static org.mockito.Mockito.*;
 
-@DisplayName("findGuestUserUseCase Test")
+@DisplayName("AddUserToRoomUseCase Test")
 @ExtendWith(MockitoExtension.class)
-class findGuestUserUseCaseTest {
+class CreateRoomUseCaseTest {
 
     private static final int CORE_POOL_SIZE = 20;
     private static final int MAX_POOL_SIZE = 1000;
     private static final String ASYNC_PREFIX = "async-";
     private static final boolean WAIT_FOR_TASK_TO_COMPLETE_ON_SHUTDOWN = true;
 
-    private final GuestUserRepository guestUserRepository = mock(GuestUserRepository.class);
+    private final RoomRepository roomRepository = mock(RoomRepository.class);
 
     @BeforeAll
     static void init() {
@@ -39,22 +37,21 @@ class findGuestUserUseCaseTest {
     }
 
     @Test
-    @DisplayName("should return a list of guest users")
-    void findGuestUserOk() {
+    @DisplayName("When createRoom is executed Should Return its id")
+    void createRoomOk() {
 
         //given
-        Integer roomId = 1;
-        GuestUser guestUser = GuestUser.builder().name("Juan").roomId(roomId).build();
+        Room room = Room.builder().title("Sprint 1").build();
 
-        when(guestUserRepository.findByRoom(roomId)).thenReturn(List.of(guestUser));
+        when(roomRepository.create(room)).thenReturn(1);
 
-        FindGuestUserUseCase findGuestUserUseCase = new FindGuestUserUseCase(guestUserRepository);
+        CreateRoomUseCase createRoomUseCase = new CreateRoomUseCase(roomRepository);
 
         //when
-        GuestUser resultGuestUser = findGuestUserUseCase.execute(roomId).get(0);
+        Integer resultGuestUser = createRoomUseCase.execute(room);
 
         //then
-        assertEquals(guestUser, resultGuestUser);
+        assertEquals(1, resultGuestUser);
     }
 
 }
