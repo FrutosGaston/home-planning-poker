@@ -22,9 +22,10 @@ public class TaskWS {
 
     public static TaskWS of(Task task) {
         List<Estimation> estimations = Optional.ofNullable(task.getEstimations()).orElse(List.of());
+        EstimationWS estimationWS = Optional.ofNullable(task.getEstimation()).map(EstimationWS::of).orElse(null);
         return TaskWS.builder()
                 .id(task.getId())
-                .estimation(EstimationWS.of(task.getEstimation()))
+                .estimation(estimationWS)
                 .title(task.getTitle())
                 .roomId(task.getRoomId())
                 .estimations(estimations.stream()

@@ -18,6 +18,7 @@ public class EstimationRest {
     Integer guestUserId;
     @JsonFormat(pattern="yyyy-MM-dd HH:mm:ss")
     LocalDateTime createdAt;
+    Boolean active;
 
     public static EstimationRest from(Estimation estimation) {
         return EstimationRest.builder()
@@ -26,6 +27,7 @@ public class EstimationRest {
                 .taskId(estimation.getTaskId())
                 .guestUserId(estimation.getGuestUserId())
                 .createdAt(estimation.getCreatedAt())
+                .active(estimation.getActive())
                 .build();
     }
 

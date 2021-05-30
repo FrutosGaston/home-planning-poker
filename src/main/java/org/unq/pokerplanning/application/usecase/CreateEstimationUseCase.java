@@ -34,7 +34,9 @@ public class CreateEstimationUseCase implements CreateEstimationCommand {
     @Override
     public Integer execute(Estimation estimation) {
         Integer estimationId = estimationRepository.create(estimation);
-        val completedEstimation = estimationService.completeEstimation(estimation.withId(estimationId));
+        val completedEstimation = estimationService.completeEstimation(estimation
+                .withId(estimationId)
+                .withActive(true));
 
         Optional<Task> taskO = taskRepository.get(estimation.getTaskId());
         taskO.ifPresent(task -> estimationMessenger.created(completedEstimation, task.getRoomId()));

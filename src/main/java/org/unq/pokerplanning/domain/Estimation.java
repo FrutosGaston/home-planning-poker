@@ -16,4 +16,5 @@ public class Estimation {
     Integer taskId;
     Integer guestUserId;
     LocalDateTime createdAt;
+    @With Boolean active;
 }

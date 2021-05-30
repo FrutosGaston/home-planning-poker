@@ -9,4 +9,5 @@ public interface EstimationRepository {
     List<Estimation> findByTask(Integer taskId);
     Optional<Estimation> get(Integer estimationId);
     Integer create(Estimation estimation);
+    Integer invalidateAll(Integer taskId);
 }

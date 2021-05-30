@@ -122,6 +122,10 @@ alter table task
         constraint task_estimation_id_fk
             references estimation;
 
+-- ADD ACTIVE TO ESTIMATIONS
+alter table estimation
+    add active boolean default true;
+
 
 
 insert into room (title, description) values ('Entrega 1', 'Entrega 1 de TTIP');

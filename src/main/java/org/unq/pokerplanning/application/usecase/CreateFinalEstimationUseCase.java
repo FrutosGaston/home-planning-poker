@@ -3,7 +3,6 @@ package org.unq.pokerplanning.application.usecase;
 import lombok.val;
 import org.springframework.stereotype.Component;
 import org.unq.pokerplanning.application.port.in.CreateFinalEstimationCommand;
-import org.unq.pokerplanning.application.port.out.CardRepository;
 import org.unq.pokerplanning.application.port.out.EstimationRepository;
 import org.unq.pokerplanning.application.port.out.TaskMessenger;
 import org.unq.pokerplanning.application.port.out.TaskRepository;

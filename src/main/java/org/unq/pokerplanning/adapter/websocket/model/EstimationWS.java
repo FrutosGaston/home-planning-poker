@@ -15,6 +15,7 @@ public class EstimationWS {
     Integer taskId;
     Integer guestUserId;
     LocalDateTime createdAt;
+    Boolean active;
 
     public static EstimationWS of(Estimation estimation) {
         return EstimationWS.builder()
@@ -22,6 +23,7 @@ public class EstimationWS {
                 .card(estimation.getCard())
                 .taskId(estimation.getTaskId())
                 .guestUserId(estimation.getGuestUserId())
+                .active(estimation.getActive())
                 .build();
     }
 }

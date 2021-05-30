@@ -21,15 +21,17 @@ public final class TaskControllerAdapter {
     private final UpdateTaskCommand updateTaskCommand;
     private final CreateFinalEstimationCommand createFinalEstimationCommand;
     private final CreateTaskCommand createTaskCommand;
+    private final InvalidateEstimationsCommand invalidateEstimationsCommand;
 
     public TaskControllerAdapter(FindTaskQuery findTaskQuery, CreateEstimationCommand createEstimationCommand,
                                  UpdateTaskCommand updateTaskCommand, CreateFinalEstimationCommand createFinalEstimationCommand,
-                                 CreateTaskCommand createTaskCommand) {
+                                 CreateTaskCommand createTaskCommand, InvalidateEstimationsCommand invalidateEstimationsCommand) {
         this.findTaskQuery = findTaskQuery;
         this.createEstimationCommand = createEstimationCommand;
         this.updateTaskCommand = updateTaskCommand;
         this.createFinalEstimationCommand = createFinalEstimationCommand;
         this.createTaskCommand = createTaskCommand;
+        this.invalidateEstimationsCommand = invalidateEstimationsCommand;
     }
 
     @GetMapping
@@ -57,5 +59,9 @@ public final class TaskControllerAdapter {
     public Integer createEstimation(@RequestBody EstimationRest estimation) {
         return createEstimationCommand.execute(estimation.toDomain());
     }
-}
 
+    @DeleteMapping("{taskId}/estimations")
+    public void invalidateEstimation(@PathVariable Integer taskId) {
+        invalidateEstimationsCommand.execute(taskId);
+    }
+}

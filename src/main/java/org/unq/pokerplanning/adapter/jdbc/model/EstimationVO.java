@@ -22,6 +22,7 @@ public class EstimationVO {
     private Integer taskId;
     private Integer guestUserId;
     private LocalDateTime createdAt;
+    private Boolean active;
 
     public static EstimationVO of(Estimation estimation) {
         return EstimationVO.builder()
@@ -38,6 +39,7 @@ public class EstimationVO {
                 .taskId(this.taskId)
                 .guestUserId(this.guestUserId)
                 .createdAt(this.createdAt)
+                .active(this.active)
                 .build();
     }
 
@@ -46,5 +48,11 @@ public class EstimationVO {
                 .addValue("card_id", this.cardId)
                 .addValue("guest_user_id", this.guestUserId)
                 .addValue("task_id", this.taskId);
+    }
+
+    public MapSqlParameterSource toInvalidateMap() {
+        return new MapSqlParameterSource()
+                .addValue("task_id", this.taskId)
+                .addValue("active", false);
     }
 }
