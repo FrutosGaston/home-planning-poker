@@ -8,6 +8,7 @@ import org.unq.pokerplanning.adapter.jdbc.exception.NotFoundJdbcException;
 import org.unq.pokerplanning.adapter.jdbc.exception.SqlResourceException;
 import org.unq.pokerplanning.adapter.jdbc.model.GuestUserVO;
 import org.unq.pokerplanning.adapter.jdbc.model.RoomVO;
+import org.unq.pokerplanning.adapter.jdbc.model.TaskVO;
 import org.unq.pokerplanning.application.port.out.GuestUserRepository;
 import org.unq.pokerplanning.application.port.out.RoomRepository;
 import org.unq.pokerplanning.config.ErrorCode;
@@ -23,14 +24,17 @@ import java.util.stream.Collectors;
 public class RoomJDBCAdapter implements RoomRepository {
 
     private static final String CREATE_ROOM_SQL_PATH = "sql/insert-room.sql";
+    private static final String UPDATE_ROOM_SQL_PATH = "sql/update-room.sql";
     private static final String GET_ROOM_SQL_PATH = "sql/get-room.sql";
     private final GenericDao genericDAO;
     private final String insertQuery;
+    private final String updateQuery;
     private final String getQuery;
 
     public RoomJDBCAdapter(GenericDao genericDAO) {
         this.genericDAO = genericDAO;
         this.insertQuery = SqlReader.get(CREATE_ROOM_SQL_PATH);
+        this.updateQuery = SqlReader.get(UPDATE_ROOM_SQL_PATH);
         this.getQuery = SqlReader.get(GET_ROOM_SQL_PATH);
     }
 
@@ -57,4 +61,14 @@ public class RoomJDBCAdapter implements RoomRepository {
             throw new NotFoundJdbcException(ErrorCode.FIND_JDBC, ex);
         }
     }
+
+    @Override
+    public Integer update(Room room) {
+        try {
+            MapSqlParameterSource map = RoomVO.of(room).toUpdateMap();
+            return genericDAO.updateObject(updateQuery, map);
+        } catch (DataAccessException ex) {
+            log.error("Ocurrio un error al realizar el update de la sala: {}, ex: {}", room, ex);
+            throw new SqlResourceException(ErrorCode.INSERT_JDBC, ex);
+        }    }
 }

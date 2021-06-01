@@ -20,6 +20,7 @@ import java.time.LocalDateTime;
 public class RoomVO {
     private Integer id;
     private Integer deckId;
+    private Integer selectedTaskId;
     private String title;
     private String description;
     private LocalDateTime createdAt;
@@ -30,6 +31,7 @@ public class RoomVO {
                 .title(room.getTitle())
                 .description(room.getDescription())
                 .deckId(room.getDeckId())
+                .selectedTaskId(room.getSelectedTaskId())
                 .createdAt(room.getCreatedAt())
                 .build();
     }
@@ -40,6 +42,7 @@ public class RoomVO {
                 .title(this.title)
                 .description(this.description)
                 .deckId(this.deckId)
+                .selectedTaskId(this.selectedTaskId)
                 .createdAt(this.createdAt)
                 .build();
     }
@@ -49,5 +52,11 @@ public class RoomVO {
                 .addValue("title", this.title)
                 .addValue("description", this.description)
                 .addValue("deck_id", this.deckId);
+    }
+
+    public MapSqlParameterSource toUpdateMap() {
+        return new MapSqlParameterSource()
+                .addValue("selected_task_id", this.selectedTaskId)
+                .addValue("id", this.id);
     }
 }

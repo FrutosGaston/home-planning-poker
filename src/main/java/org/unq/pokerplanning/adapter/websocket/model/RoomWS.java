@@ -1,35 +1,23 @@
-package org.unq.pokerplanning.adapter.controller.model;
+package org.unq.pokerplanning.adapter.websocket.model;
 
-import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.Builder;
 import lombok.Value;
 import org.unq.pokerplanning.domain.Room;
 
 import java.time.LocalDateTime;
 
-@Value
 @Builder
-public class RoomRest {
-
+@Value
+public class RoomWS {
     Integer id;
     Integer deckId;
     Integer selectedTaskId;
     String title;
     String description;
-    @JsonFormat(pattern="yyyy-MM-dd HH:mm:ss")
     LocalDateTime createdAt;
 
-    public Room toDomain() {
-        return Room.builder()
-                .title(this.title)
-                .description(this.description)
-                .deckId(this.deckId)
-                .createdAt(this.createdAt)
-                .build();
-    }
-
-    public static RoomRest from(Room room) {
-        return RoomRest.builder()
+    public static RoomWS of(Room room) {
+        return RoomWS.builder()
                 .id(room.getId())
                 .deckId(room.getDeckId())
                 .selectedTaskId(room.getSelectedTaskId())

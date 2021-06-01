@@ -10,6 +10,7 @@ import java.time.LocalDateTime;
 public class Room {
     Integer id;
     Integer deckId;
+    Integer selectedTaskId;
     String title;
     String description;
     LocalDateTime createdAt;

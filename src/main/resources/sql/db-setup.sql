@@ -126,7 +126,11 @@ alter table task
 alter table estimation
     add active boolean default true;
 
-
+-- ADD SELECTED TASK TO ROOM
+alter table room
+    add selected_task_id int
+        constraint room_task_id_fk
+            references task (id);
 
 insert into room (title, description) values ('Entrega 1', 'Entrega 1 de TTIP');
 INSERT INTO public.task (room_id, id, title, created_at, estimation_id) VALUES (1, 1, 'Crear y setupear repositorios', '2021-04-19 00:05:09.586763', null);
