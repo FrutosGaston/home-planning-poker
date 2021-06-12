@@ -39,7 +39,9 @@ public class FindTaskUseCase implements FindTaskQuery {
     }
 
     private List<Estimation> getEstimations(Task task) {
-        return estimationRepository.findByTask(task.getId());
+        return estimationRepository.findByTask(task.getId()).stream()
+                .map(estimationService::completeEstimation)
+                .collect(Collectors.toList());
     }
 
     private Estimation getEstimation(Task task) {

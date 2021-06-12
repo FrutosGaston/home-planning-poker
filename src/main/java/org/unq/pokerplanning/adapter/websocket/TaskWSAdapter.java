@@ -4,13 +4,9 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.messaging.simp.SimpMessageSendingOperations;
 import org.springframework.messaging.simp.SimpMessagingTemplate;
 import org.springframework.stereotype.Component;
-import org.unq.pokerplanning.adapter.websocket.model.EstimationWS;
 import org.unq.pokerplanning.adapter.websocket.model.TaskWS;
 import org.unq.pokerplanning.application.port.out.TaskMessenger;
-import org.unq.pokerplanning.domain.Estimation;
 import org.unq.pokerplanning.domain.Task;
-
-import java.util.List;
 
 @Component
 @Slf4j
