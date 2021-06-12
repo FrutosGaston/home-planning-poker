@@ -132,8 +132,13 @@ alter table room
         constraint room_task_id_fk
             references task (id);
 
-insert into room (title, description) values ('Entrega 1', 'Entrega 1 de TTIP');
-INSERT INTO public.task (room_id, id, title, created_at, estimation_id) VALUES (1, 1, 'Crear y setupear repositorios', '2021-04-19 00:05:09.586763', null);
-INSERT INTO public.task (room_id, id, title, created_at, estimation_id) VALUES (1, 2, 'Como usuario invitado, al entrar a una sala quiero poder ver a los otros usuarios que estan dentro de la misma', '2021-04-19 00:05:36.762076', null);
-INSERT INTO public.task (room_id, id, title, created_at, estimation_id) VALUES (1, 3, 'Como usuario invitado quiero poder entrar a una sala existente', '2021-04-19 00:05:20.586763', null);
-
+INSERT INTO public.deck (id, name, created_at) VALUES (1, 'Fibonacci', '2021-05-22 20:29:46.626436');
+INSERT INTO public.card (id, value, deck_id, created_at) VALUES (1, '0', 1, '2021-05-22 20:30:43.360059');
+INSERT INTO public.card (id, value, deck_id, created_at) VALUES (2, '1', 1, '2021-05-22 20:30:43.360059');
+INSERT INTO public.card (id, value, deck_id, created_at) VALUES (3, '2', 1, '2021-05-22 20:30:43.360059');
+INSERT INTO public.card (id, value, deck_id, created_at) VALUES (4, '3', 1, '2021-05-22 20:30:43.360059');
+INSERT INTO public.card (id, value, deck_id, created_at) VALUES (5, '5', 1, '2021-05-22 20:30:43.360059');
+INSERT INTO public.card (id, value, deck_id, created_at) VALUES (6, '8', 1, '2021-05-22 20:30:43.360059');
+INSERT INTO public.card (id, value, deck_id, created_at) VALUES (7, '13', 1, '2021-05-22 20:30:43.360059');
+INSERT INTO public.card (id, value, deck_id, created_at) VALUES (8, '21', 1, '2021-05-22 20:30:43.360059');
+INSERT INTO public.card (id, value, deck_id, created_at) VALUES (9, '40', 1, '2021-05-22 20:30:43.360059');
