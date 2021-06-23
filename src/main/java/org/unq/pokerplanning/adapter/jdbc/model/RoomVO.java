@@ -10,6 +10,7 @@ import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
 import org.unq.pokerplanning.domain.Room;
 
 import java.time.LocalDateTime;
+import java.util.UUID;
 
 
 @Data
@@ -19,6 +20,7 @@ import java.time.LocalDateTime;
 @JsonNaming(PropertyNamingStrategy.SnakeCaseStrategy.class)
 public class RoomVO {
     private Integer id;
+    private UUID uuid;
     private Integer deckId;
     private Integer selectedTaskId;
     private String title;
@@ -28,6 +30,7 @@ public class RoomVO {
     public static RoomVO of(Room room) {
         return RoomVO.builder()
                 .id(room.getId())
+                .uuid(room.getUuid())
                 .title(room.getTitle())
                 .description(room.getDescription())
                 .deckId(room.getDeckId())
@@ -39,6 +42,7 @@ public class RoomVO {
     public Room toDomain() {
         return Room.builder()
                 .id(this.id)
+                .uuid(this.uuid)
                 .title(this.title)
                 .description(this.description)
                 .deckId(this.deckId)

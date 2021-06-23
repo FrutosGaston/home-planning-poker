@@ -6,12 +6,14 @@ import lombok.Value;
 import org.unq.pokerplanning.domain.Room;
 
 import java.time.LocalDateTime;
+import java.util.UUID;
 
 @Value
 @Builder
 public class RoomRest {
 
     Integer id;
+    UUID uuid;
     Integer deckId;
     Integer selectedTaskId;
     String title;
@@ -31,6 +33,7 @@ public class RoomRest {
     public static RoomRest from(Room room) {
         return RoomRest.builder()
                 .id(room.getId())
+                .uuid(room.getUuid())
                 .deckId(room.getDeckId())
                 .selectedTaskId(room.getSelectedTaskId())
                 .title(room.getTitle())

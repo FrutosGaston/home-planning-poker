@@ -6,4 +6,4 @@ SELECT id,
        selected_task_id,
        created_at
 FROM room
-WHERE id = :id
+WHERE uuid = :uuid

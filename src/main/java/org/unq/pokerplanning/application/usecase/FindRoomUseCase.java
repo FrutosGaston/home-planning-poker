@@ -4,13 +4,10 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
 import org.unq.pokerplanning.application.port.in.FindRoomQuery;
 import org.unq.pokerplanning.application.port.out.RoomRepository;
-import org.unq.pokerplanning.domain.Estimation;
 import org.unq.pokerplanning.domain.Room;
-import org.unq.pokerplanning.domain.Task;
 
-import java.util.List;
 import java.util.Optional;
-import java.util.stream.Collectors;
+import java.util.UUID;
 
 @Component
 @Slf4j
@@ -23,7 +20,7 @@ public class FindRoomUseCase implements FindRoomQuery {
     }
 
     @Override
-    public Optional<Room> execute(Integer roomId) {
-        return roomRepository.getById(roomId);
+    public Optional<Room> execute(UUID uuid) {
+        return roomRepository.getByUUID(uuid);
     }
 }

@@ -8,8 +8,6 @@ import org.unq.pokerplanning.application.port.out.RoomMessenger;
 import org.unq.pokerplanning.application.port.out.RoomRepository;
 import org.unq.pokerplanning.domain.Room;
 
-import java.util.function.Function;
-
 @Component
 @Slf4j
 public class UpdateRoomUseCase implements UpdateRoomCommand {

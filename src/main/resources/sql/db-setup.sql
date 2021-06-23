@@ -132,6 +132,16 @@ alter table room
         constraint room_task_id_fk
             references task (id);
 
+-- ADD CODE TO ROOM
+alter table room
+    add code varchar(4) not null;
+create index room_code_index on room (code);
+
+-- ADD UUID TO ROOM
+CREATE EXTENSION IF NOT EXISTS "uuid-ossp";
+alter table room add uuid uuid default uuid_generate_v4();
+create index room_uuid_index on room (uuid);
+
 INSERT INTO public.deck (id, name, created_at) VALUES (1, 'Fibonacci', '2021-05-22 20:29:46.626436');
 INSERT INTO public.card (id, value, deck_id, created_at) VALUES (1, '0', 1, '2021-05-22 20:30:43.360059');
 INSERT INTO public.card (id, value, deck_id, created_at) VALUES (2, '1', 1, '2021-05-22 20:30:43.360059');

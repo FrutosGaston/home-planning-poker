@@ -8,7 +8,6 @@ import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor;
 import org.unq.pokerplanning.application.port.out.*;
 import org.unq.pokerplanning.domain.Room;
-import org.unq.pokerplanning.domain.Task;
 
 import java.util.Optional;
 

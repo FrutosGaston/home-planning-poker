@@ -7,6 +7,7 @@ import org.unq.pokerplanning.adapter.controller.model.RoomRest;
 import org.unq.pokerplanning.application.port.in.*;
 
 import java.util.Optional;
+import java.util.UUID;
 
 @RestController
 @RequestMapping("/api/v1/rooms")
@@ -23,14 +24,14 @@ public final class RoomControllerAdapter {
         this.updateRoomCommand = updateRoomCommand;
     }
 
-    @GetMapping("/{roomId}")
-    public Optional<RoomRest> getRoom(@PathVariable Integer roomId) {
-        return findRoomQuery.execute(roomId).map(RoomRest::from);
+    @GetMapping("/{roomUUID}")
+    public Optional<RoomRest> getRoom(@PathVariable UUID roomUUID) {
+        return findRoomQuery.execute(roomUUID).map(RoomRest::from);
     }
 
     @PostMapping
-    public Integer createRoom(@RequestBody RoomRest roomRest) {
-        return createRoomCommand.execute(roomRest.toDomain());
+    public Optional<RoomRest> createRoom(@RequestBody RoomRest roomRest) {
+        return createRoomCommand.execute(roomRest.toDomain()).map(RoomRest::from);
     }
 
     @PatchMapping("/{roomId}")
