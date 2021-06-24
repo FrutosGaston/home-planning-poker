@@ -53,6 +53,7 @@ class FindTaskUseCaseTest {
 
         when(taskRepository.findByRoom(roomId)).thenReturn(List.of(task));
         when(estimationRepository.findByTask(taskId)).thenReturn(List.of(estimation));
+        when(estimationService.completeEstimation(estimation)).thenReturn(estimation);
 
         FindTaskUseCase findTaskUseCase = new FindTaskUseCase(taskRepository, estimationRepository, estimationService);
 

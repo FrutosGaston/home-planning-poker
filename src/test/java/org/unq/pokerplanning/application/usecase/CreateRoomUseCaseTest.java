@@ -12,6 +12,8 @@ import org.unq.pokerplanning.application.port.out.RoomRepository;
 import org.unq.pokerplanning.domain.GuestUser;
 import org.unq.pokerplanning.domain.Room;
 
+import java.util.Optional;
+
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.Mockito.*;
 
@@ -41,17 +43,19 @@ class CreateRoomUseCaseTest {
     void createRoomOk() {
 
         //given
+        Integer roomId = 1;
         Room room = Room.builder().title("Sprint 1").build();
 
-        when(roomRepository.create(room)).thenReturn(1);
+        when(roomRepository.create(room)).thenReturn(roomId);
+        when(roomRepository.getById(roomId)).thenReturn(Optional.of(room));
 
         CreateRoomUseCase createRoomUseCase = new CreateRoomUseCase(roomRepository);
 
         //when
-        Integer resultGuestUser = createRoomUseCase.execute(room);
+        Optional<Room> resultGuestUser = createRoomUseCase.execute(room);
 
         //then
-        assertEquals(1, resultGuestUser);
+        assertEquals(room, resultGuestUser.get());
     }
 
 }

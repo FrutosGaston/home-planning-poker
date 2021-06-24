@@ -51,8 +51,8 @@ class CreateEstimationUseCaseTest {
         //given
         Integer estimationId = 1;
         Integer roomId = 1;
-        Estimation estimation = Estimation.builder().cardId(1).taskId(1).guestUserId(1).build();
-        Estimation estimationWithId = Estimation.builder().id(estimationId).cardId(1).taskId(1).guestUserId(1).build();
+        Estimation estimation = Estimation.builder().cardId(1).taskId(1).guestUserId(1).active(true).build();
+        Estimation estimationWithId = estimation.withId(estimationId);
         Task task = Task.builder().id(1).roomId(roomId).build();
 
         when(estimationRepository.create(estimation)).thenReturn(estimationId);
@@ -65,6 +65,7 @@ class CreateEstimationUseCaseTest {
         Integer resultEstimationId = createEstimationUseCase.execute(estimation);
 
         //then
+        verify(estimationService, times(1)).completeEstimation(estimationWithId);
         verify(estimationMessenger, times(1)).created(estimation.withId(estimationId), roomId);
         assertEquals(1, resultEstimationId);
     }

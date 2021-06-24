@@ -41,6 +41,9 @@ class TaskControllerAdapterTest {
     private CreateFinalEstimationCommand createFinalEstimationCommand;
 
     @MockBean
+    private InvalidateEstimationsCommand invalidateEstimationsCommand;
+
+    @MockBean
     private CreateTaskCommand createTaskCommand;
 
     @MockBean
