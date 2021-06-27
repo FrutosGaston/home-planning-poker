@@ -55,4 +55,11 @@ public class EstimationVO {
                 .addValue("task_id", this.taskId)
                 .addValue("active", false);
     }
+
+    public MapSqlParameterSource toInvalidateByGuestUserMap() {
+        return new MapSqlParameterSource()
+                .addValue("task_id", this.taskId)
+                .addValue("guest_user_id", this.guestUserId)
+                .addValue("active", false);
+    }
 }

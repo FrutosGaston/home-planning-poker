@@ -10,4 +10,5 @@ public interface EstimationRepository {
     Optional<Estimation> get(Integer estimationId);
     Integer create(Estimation estimation);
     Integer invalidateAll(Integer taskId);
+    Integer invalidateAllForGuestUser(Integer taskId, Integer guestUserId);
 }

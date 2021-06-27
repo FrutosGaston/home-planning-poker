@@ -24,11 +24,13 @@ public class EstimationJDBCAdapter implements EstimationRepository {
     private static final String GET_ESTIMATION_SQL_PATH = "sql/get-estimation.sql";
     private static final String INSERT_ESTIMATION_SQL_PATH = "sql/insert-estimation.sql";
     private static final String INVALIDATE_ESTIMATIONS_SQL_PATH = "sql/invalidate-estimations.sql";
+    private static final String INVALIDATE_ESTIMATIONS_BY_GUEST_USER_SQL_PATH = "sql/invalidate-estimations-by-guest-user.sql";
     private final GenericDao genericDAO;
     private final String findByTaskQuery;
     private final String getEstimationQuery;
     private final String insertQuery;
     private final String invalidateAllQuery;
+    private final String invalidateAllByGuestUserQuery;
 
     public EstimationJDBCAdapter(GenericDao genericDAO) {
         this.genericDAO = genericDAO;
@@ -36,6 +38,7 @@ public class EstimationJDBCAdapter implements EstimationRepository {
         this.getEstimationQuery = SqlReader.get(GET_ESTIMATION_SQL_PATH);
         this.insertQuery = SqlReader.get(INSERT_ESTIMATION_SQL_PATH);
         this.invalidateAllQuery = SqlReader.get(INVALIDATE_ESTIMATIONS_SQL_PATH);
+        this.invalidateAllByGuestUserQuery = SqlReader.get(INVALIDATE_ESTIMATIONS_BY_GUEST_USER_SQL_PATH);
     }
 
     @Override
@@ -87,5 +90,16 @@ public class EstimationJDBCAdapter implements EstimationRepository {
             throw new SqlResourceException(ErrorCode.INSERT_JDBC, ex);
         }
     }
+
+    @Override
+    public Integer invalidateAllForGuestUser(Integer taskId, Integer guestUserId) {
+        try {
+            MapSqlParameterSource map = EstimationVO.builder().taskId(taskId).guestUserId(guestUserId).build()
+                    .toInvalidateByGuestUserMap();
+            return genericDAO.updateObject(invalidateAllByGuestUserQuery, map);
+        } catch (DataAccessException ex) {
+            log.error("Ocurrio un error al invalidar las estimaciones de la tarea: {}, ex: {}", taskId, ex);
+            throw new SqlResourceException(ErrorCode.INSERT_JDBC, ex);
+        }    }
 
 }

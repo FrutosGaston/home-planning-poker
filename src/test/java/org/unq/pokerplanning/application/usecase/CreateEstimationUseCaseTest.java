@@ -6,9 +6,9 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor;
-import org.unq.pokerplanning.application.port.out.CardRepository;
 import org.unq.pokerplanning.application.port.out.EstimationMessenger;
 import org.unq.pokerplanning.application.port.out.EstimationRepository;
+import org.unq.pokerplanning.application.port.out.TaskMessenger;
 import org.unq.pokerplanning.application.port.out.TaskRepository;
 import org.unq.pokerplanning.application.service.EstimationService;
 import org.unq.pokerplanning.domain.Estimation;
@@ -31,6 +31,7 @@ class CreateEstimationUseCaseTest {
 
     private final EstimationRepository estimationRepository = mock(EstimationRepository.class);
     private final EstimationMessenger estimationMessenger = mock(EstimationMessenger.class);
+    private final TaskMessenger taskMessenger = mock(TaskMessenger.class);
     private final TaskRepository taskRepository = mock(TaskRepository.class);
     private final EstimationService estimationService = mock(EstimationService.class);
 
@@ -59,7 +60,7 @@ class CreateEstimationUseCaseTest {
         when(taskRepository.get(estimation.getTaskId())).thenReturn(Optional.of(task));
         when(estimationService.completeEstimation(estimationWithId)).thenReturn(estimationWithId);
 
-        CreateEstimationUseCase createEstimationUseCase = new CreateEstimationUseCase(estimationRepository, estimationMessenger, taskRepository, estimationService);
+        CreateEstimationUseCase createEstimationUseCase = new CreateEstimationUseCase(estimationRepository, estimationMessenger, taskMessenger, taskRepository, estimationService);
 
         //when
         Integer resultEstimationId = createEstimationUseCase.execute(estimation);
