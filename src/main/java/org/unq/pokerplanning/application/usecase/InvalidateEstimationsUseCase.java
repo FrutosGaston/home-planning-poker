@@ -31,7 +31,9 @@ public class InvalidateEstimationsUseCase implements InvalidateEstimationsComman
         if (taskUpdatedResult < 1) throw new NotFoundException(ErrorCode.INTERNAL_ERROR);
 
         val estimations = estimationRepository.findByTask(taskId);
-        val taskO = taskRepository.get(taskId).map(task -> task.withEstimations(estimations));
+        taskRepository.update(Task.builder().id(taskId).estimationId(null).build());
+
+        val taskO = taskRepository.get(taskId).map(task -> task.withEstimations(estimations).withEstimation(null));
 
         taskO.ifPresent(taskMessenger::invalidated);
     }
