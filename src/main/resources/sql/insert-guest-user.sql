@@ -1,2 +1,2 @@
-INSERT INTO guest_user(name, room_id)
-VALUES (:name, :room_id)
+INSERT INTO guest_user(name, room_id, spectator)
+VALUES (:name, :room_id, :spectator)

@@ -15,11 +15,13 @@ public class GuestUserVO {
     private Integer id;
     private String name;
     private Integer roomId;
+    private Boolean spectator;
 
     public static GuestUserVO of(GuestUser guestUser) {
         return GuestUserVO.builder()
                 .name(guestUser.getName())
                 .roomId(guestUser.getRoomId())
+                .spectator(guestUser.getSpectator())
                 .build();
     }
 
@@ -28,12 +30,14 @@ public class GuestUserVO {
                 .id(this.id)
                 .name(this.name)
                 .roomId(this.roomId)
+                .spectator(this.spectator)
                 .build();
     }
 
     public MapSqlParameterSource toMap() {
         return new MapSqlParameterSource()
                 .addValue("name", this.name)
+                .addValue("spectator", this.spectator)
                 .addValue("room_id", this.roomId);
     }
 }

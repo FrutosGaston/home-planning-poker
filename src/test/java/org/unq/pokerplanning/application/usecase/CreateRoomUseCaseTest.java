@@ -6,10 +6,8 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor;
-import org.unq.pokerplanning.application.port.out.GuestUserMessenger;
-import org.unq.pokerplanning.application.port.out.GuestUserRepository;
 import org.unq.pokerplanning.application.port.out.RoomRepository;
-import org.unq.pokerplanning.domain.GuestUser;
+import org.unq.pokerplanning.application.port.out.TaskRepository;
 import org.unq.pokerplanning.domain.Room;
 
 import java.util.Optional;
@@ -27,6 +25,7 @@ class CreateRoomUseCaseTest {
     private static final boolean WAIT_FOR_TASK_TO_COMPLETE_ON_SHUTDOWN = true;
 
     private final RoomRepository roomRepository = mock(RoomRepository.class);
+    private final TaskRepository taskRepository = mock(TaskRepository.class);
 
     @BeforeAll
     static void init() {
@@ -49,7 +48,7 @@ class CreateRoomUseCaseTest {
         when(roomRepository.create(room)).thenReturn(roomId);
         when(roomRepository.getById(roomId)).thenReturn(Optional.of(room));
 
-        CreateRoomUseCase createRoomUseCase = new CreateRoomUseCase(roomRepository);
+        CreateRoomUseCase createRoomUseCase = new CreateRoomUseCase(roomRepository, taskRepository);
 
         //when
         Optional<Room> resultGuestUser = createRoomUseCase.execute(room);

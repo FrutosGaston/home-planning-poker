@@ -145,6 +145,9 @@ create index room_uuid_index on room (uuid);
 -- REMOVE NOT NULL FROM CARD -> DECK_ID
 ALTER TABLE card ALTER COLUMN deck_id DROP NOT NULL;
 
+-- ADD SPECTATOR FLAG TO GUEST USER
+alter table guest_user add spectator boolean default false;
+
 INSERT INTO public.deck (id, name, created_at) VALUES (1, 'Fibonacci', '2021-05-22 20:29:46.626436');
 INSERT INTO public.card (id, value, deck_id, created_at) VALUES (1, '0', 1, '2021-05-22 20:30:43.360059');
 INSERT INTO public.card (id, value, deck_id, created_at) VALUES (2, '1', 1, '2021-05-22 20:30:43.360059');

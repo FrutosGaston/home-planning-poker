@@ -14,5 +14,6 @@ public class GuestUser {
     private Integer id;
     private String name;
     private Integer roomId;
+    private Boolean spectator;
     private LocalDateTime createdAt;
 }
