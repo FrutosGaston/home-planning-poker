@@ -28,7 +28,7 @@ public class CreateFinalEstimationUseCase implements CreateFinalEstimationComman
 
     @Override
     public Integer execute(Estimation estimation) {
-        val estimationId = estimationRepository.create(estimation);
+        val estimationId = estimationRepository.create(estimation.withTaskId(null));
         val completedEstimation = estimationService.completeEstimation(estimation.withId(estimationId));
 
         updateTaskEstimation(estimation, estimationId);

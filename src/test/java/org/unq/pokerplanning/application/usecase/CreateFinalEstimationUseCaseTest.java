@@ -49,7 +49,7 @@ class CreateFinalEstimationUseCaseTest {
 
         //given
         Integer estimationId = 1;
-        Estimation estimation = Estimation.builder().id(estimationId).cardId(1).taskId(1).guestUserId(1).build();
+        Estimation estimation = Estimation.builder().id(estimationId).cardId(1).guestUserId(1).build();
         Task task = Task.builder().id(1).build();
 
         when(estimationRepository.create(estimation)).thenReturn(1);

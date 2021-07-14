@@ -13,7 +13,7 @@ public class Estimation {
     @With Integer id;
     @With Card card;
     Integer cardId;
-    Integer taskId;
+    @With Integer taskId;
     Integer guestUserId;
     LocalDateTime createdAt;
     @With Boolean active;
