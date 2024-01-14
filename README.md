@@ -1,34 +1,26 @@
 # Home Planning Poker
 ![logo](docs/logo-hpp.svg)
 
-Home Planning Poker es una plataforma en la que podremos simular virtualmente la conocida practica llamada de manera similar: [Planning Poker](https://es.wikipedia.org/wiki/Planning_poker).
-Aquí seremos capaces de crear una sala en línea, asignarle las tareas que queremos estimar en la sesión, elegir nuestro mazo favorito y finalmente invitar a nuestro equipo para estimar en conjunto.
+Home Planning Poker is a platform where we can virtually simulate the well-known practice called similarly: [Planning Poker](https://en.wikipedia.org/wiki/Planning_poker). 
+Here, we will be able to create an online room, assign the tasks we want to estimate in the session, choose our favorite deck, and finally, invite our team to estimate together.
 
-## [Repositorio frontend](https://github.com/FrutosGaston/home-poker-planning-ui)
+## [Frontend Repository](https://github.com/FrutosGaston/home-poker-planning-ui)
 
-## Miembros
+## Members
 * [Frutos Gaston](https://www.linkedin.com/in/gaston-frutos/)
 
 ## Java Version
-La version que java que se va a utilizar es la 11.0.10 basada en el OpenJDK.
+The Java version that will be used is 11.0.10 based on the OpenJDK.
 
 ## Swagger
-### Swagger json
+### Swagger JSON
 http://localhost:8080/api/v2/api-docs
 
 ### Swagger UI
 http://localhost:8080/swagger-ui.html
 
 ## Tasks
-### Build docker y push al registry
+### Build Docker and Push to Registry
 
-Ejecutar el siguiente task haciendo uso del gradle wrapper.
+Execute the following task using the Gradle wrapper.
 
-```
-
-```
-
-### Jacoco
-```
-./gradlew jacocoTestReport
-```
